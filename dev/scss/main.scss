@@ -2,9 +2,35 @@
 
 @import "_adjustment/_varibles";
 @import "_adjustment/_mixin";
+@import  "_adjustment/_normalize";
 @import "_adjustment/_font";
 //@import "_adjustment/normalize"
 
 @import "_layout/_layout";
 
+
+//Пока не работает
+// @import "../bower/support-for/sass/_support-for";
+// @import "../bower/normalize-scss/sass/_normalize";
+body{
+	background-image: url("../images/bg.jpg");
+}
+
+.left{
+	width: 50px;
+	height: 50px;
+	float: left;
+	background-color: green;
+}
+
+.right{
+	width: 50px;
+	height: 50px;
+	float: right;
+	background-color: red;
+}
+
+.wrapper{
+	@include clearfix;
+}
 
