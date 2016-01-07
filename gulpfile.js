@@ -123,4 +123,4 @@ gulp.task('build', ['clean'], function () {
   gulp.start('dist');
 });
 
-gulp.task('default', ['dist', 'server', 'watch']);
+gulp.task('default', ['server', 'watch']);
