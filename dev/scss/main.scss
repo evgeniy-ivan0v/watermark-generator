@@ -10,6 +10,9 @@
 //Пока не работает
 // @import "../bower/support-for/sass/_support-for";
 // @import "../bower/normalize-scss/sass/_normalize";
+body{
+	background-image: url("../images/bg.jpg");
+}
 
 .left{
 	width: 50px;
