@@ -1,0 +1,21 @@
+@import "_layout/_layout";
+
+@import "_adjustment/_mixin";
+
+.left{
+	width: 50px;
+	height: 50px;
+	float: left;
+	background-color: green;
+}
+
+.right{
+	width: 50px;
+	height: 50px;
+	float: right;
+	background-color: red;
+}
+
+.wrapper{
+	@include clearfix;
+}
