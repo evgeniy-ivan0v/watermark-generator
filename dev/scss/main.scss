@@ -1,6 +1,15 @@
+@import "compass";
+
+@import  "_adjustment/_normalize";
+@import "_adjustment/_varibles";
+@import "_adjustment/_mixin";
+@import "_adjustment/_font";
+
 @import "_layout/_layout";
 
-@import "_adjustment/_mixin";
+//Пока не работает
+// @import "../bower/support-for/sass/_support-for";
+// @import "../bower/normalize-scss/sass/_normalize";
 
 .left{
 	width: 50px;

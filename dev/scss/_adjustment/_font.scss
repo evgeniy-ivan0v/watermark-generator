@@ -1,0 +1,5 @@
+$fontsArr: 'roboto-black','roboto-blackitalic','roboto-bold','roboto-bolditalic','robotocondensed-bold','robotocondensed-bolditalic','robotocondensed-italic','robotocondensed-light','robotocondensed-lightitalic','robotocondensed-regular','roboto-light','roboto-lightitalic';
+
+@each $item in $fontsArr {
+	@include font-face($item);
+}
