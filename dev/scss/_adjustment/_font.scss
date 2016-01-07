@@ -3,4 +3,3 @@ $fontsArr: 'roboto-black','roboto-blackitalic','roboto-bold','roboto-bolditalic'
 @each $item in $fontsArr {
 	@include font-face($item);
 }
-
