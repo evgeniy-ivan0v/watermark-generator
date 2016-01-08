@@ -64,11 +64,11 @@ gulp.task('browserify', function () {
 });
 
 //подключаем bower зависимости
-gulp.task('wiredep', function () {
+/*gulp.task('wiredep', function () {
   gulp.src(paths.html.location)
     .pipe(wiredep())
     .pipe(gulp.dest('dist/'))
-});
+});*/
 
 //компиляция jade
 gulp.task('jade', function () {
@@ -90,7 +90,7 @@ gulp.task('watch', function () {
     paths.css.location,
     paths.js.location
   ]).on('change', browserSync.reload);
-  gulp.watch('bower.json', ['wiredep']);
+  //gulp.watch('bower.json', ['wiredep']);
 });
 
 //запуск сервера
