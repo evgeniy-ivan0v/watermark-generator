@@ -2,7 +2,7 @@ var gulp = require('gulp'),
   browserSync = require('browser-sync'),
   browserify = require('browserify'),
   source = require('vinyl-source-stream'),
-  wiredep = require('wiredep').stream,
+  //wiredep = require('wiredep').stream,
  	plugin = require('gulp-load-plugins')();
 
 // пути к файлам

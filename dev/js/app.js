@@ -1,6 +1,4 @@
-var reet = require('./module/module');
+var devPanel = require('./module/dePanel.js');
 
-reet('helo word')
-$(document).ready(function() {
-	console.log('я выведен с помощью jquery');
-});
+
+	devPanel();

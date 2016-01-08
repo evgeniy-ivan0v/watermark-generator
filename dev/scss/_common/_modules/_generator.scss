@@ -32,4 +32,10 @@
 	max-width: 100%;
 	@include absolute-center;
 }
+.generator__watermark-image {
+	@include absolute-center;
+	z-index: 10;
+	max-height: 100%;
+	max-width: 100%;
+}
 

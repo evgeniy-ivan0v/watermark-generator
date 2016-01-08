@@ -1,0 +1,16 @@
+-var image = ['256x256','500x300','600x600','1800x1500','2000x1000']
+
+.dev-panel
+	a(href="#").dev-panel__close
+	.dev-panel__holder
+		span.dev-panel__text Image
+		select.dev-panel__select.dev-panel__select_image
+			each item in image
+				option(data-size="#{item}").dev-panel_option= item
+		button(data-image="generator__main-image").dev-panel__button Применить
+	.dev-panel__holder
+		span.dev-panel__text Watermark
+		select.dev-panel__select.dev-panel__select_watermark
+			each item in image
+				option(data-size="#{item}").dev-panel_option= item
+		button(data-image="generator__watermark-image").dev-panel__button Применить
