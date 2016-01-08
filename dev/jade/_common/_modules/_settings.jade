@@ -1,6 +1,12 @@
 .settings
 	h2.settings__main-title= local.rus.settings
-	include _upload
-	include _position
-	include _opacity
-	include _button
+	.settings__form-holder
+		form.settings__form
+			.settings__form-row
+				include _upload
+			.settings__form-row
+				include _position
+			.settings__form-row
+				include _opacity
+			.settings__form-row
+				include _button

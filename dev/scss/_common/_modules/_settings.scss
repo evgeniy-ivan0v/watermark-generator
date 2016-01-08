@@ -15,3 +15,23 @@
 	font-size: rem(24);
 	margin-bottom: 30px;
 }
+
+.settings__form-row{
+	@include dec-border;
+	margin-bottom: 15px;
+	@extend %clearfix;
+	&:last-child{
+		border: none;
+		&:before, &:after{
+			display: none;
+		}
+	}
+}
+
+.settings__row-title{
+	display: block;
+	font-family: "roboto-light-webfont", sans-serif;
+	font-size: #{$base-font-size}px;
+	color: $setting-titles-color;
+	padding-left: rem(17);
+}

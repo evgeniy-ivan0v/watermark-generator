@@ -1,15 +1,5 @@
-.button{
-	position: absolute;
-	right: 0;
-	left: 0;
-	margin: auto;
-	bottom: 0;
+.button-holder {
 	padding-bottom: rem(22);
-}
-
-.button__form-row{
-	@include clearfix;
-	padding:0 rem(10);
 }
 
 .buttons{
