@@ -3,7 +3,7 @@ html, body {
 	height: 100%;
 }
 body {
-	font-family: "robotocondensed-regular", Arial, sans-serif;
+	font-family: "roboto-light-webfont", Arial, sans-serif;
 	font-size: #{$base-font-size}px;
 	color: $text-color; 
 }
@@ -23,4 +23,19 @@ ul, menu {
 		height: $footer-height;
 		display: block;
 	}
+}
+
+h1, h2, h3{
+	margin: 0;
+	font-weight: normal;
+}
+
+button{
+	box-shadow: none;
+	border: none;
+	outline: none;
+}
+
+a{
+	text-decoration: none;
 }

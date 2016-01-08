@@ -1,4 +1,4 @@
-$fontsArr: 'roboto-black','roboto-blackitalic','roboto-bold','roboto-bolditalic','robotocondensed-bold','robotocondensed-bolditalic','robotocondensed-italic','robotocondensed-light','robotocondensed-lightitalic','robotocondensed-regular','roboto-light','roboto-lightitalic';
+$fontsArr: 'roboto-medium-webfont', 'firasans-light-webfont', 'SegoeUILight','roboto-black','roboto-blackitalic','roboto-bold','roboto-bolditalic','robotocondensed-bold','robotocondensed-bolditalic','robotocondensed-italic','robotocondensed-light','robotocondensed-lightitalic','robotocondensed-regular','roboto-light','roboto-lightitalic', 'roboto-light-webfont';
 
 @each $item in $fontsArr {
 	@include font-face($item);

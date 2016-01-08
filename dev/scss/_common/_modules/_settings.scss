@@ -1,0 +1,17 @@
+.settings{
+	float: right;
+	width: 260px;
+	padding: rem(19) 0;
+	height: 100%;
+	background-color: #f1f1f5;
+	border-left: 1px solid #9a9897;
+	position: relative;
+}
+
+.settings__main-title{
+	text-align: center;
+	font-family: "roboto-light-webfont", sans-serif;
+	color: $setting-titles-color;
+	font-size: rem(24);
+	margin-bottom: 30px;
+}

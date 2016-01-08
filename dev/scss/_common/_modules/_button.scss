@@ -1,0 +1,40 @@
+.button{
+	position: absolute;
+	right: 0;
+	left: 0;
+	margin: auto;
+	bottom: 0;
+	padding-bottom: rem(22);
+}
+
+.button__form-row{
+	@include clearfix;
+	padding:0 rem(10);
+}
+
+.buttons{
+	display: inline-block;
+	vertical-align: middle;
+	color: #f1f1f5;
+	height: 42px;
+	font-family: 'roboto-medium-webfont', sans-serif;
+	font-size: rem(18);
+	width: 99px;
+	overflow: hidden;
+}
+
+.button__reset{
+	float: left;
+	background-color: #c1cfd9;	
+	&:hover{
+		background-color: darken(#c1cfd9, 5%);
+	}
+}
+
+.button__submit{
+	float: right;
+	background-color: #f97e76;
+	&:hover{
+		background-color: darken(#f97e76, 5%);
+	}
+}

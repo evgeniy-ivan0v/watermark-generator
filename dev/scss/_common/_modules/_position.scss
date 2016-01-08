@@ -1,0 +1,9 @@
+.position{
+	@include dec-border;
+	margin-bottom: 15px;
+}
+.position__title{
+	font-family: "roboto-light-webfont", sans-serif;
+	font-size: #{$base-font-size}px;
+	color: $setting-titles-color;
+}
