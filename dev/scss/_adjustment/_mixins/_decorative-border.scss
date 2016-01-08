@@ -1,0 +1,19 @@
+@mixin dec-border{
+	position: relative;
+	border-bottom: 1px solid #f4c3c2;
+	&:before{
+		content:'';
+		position: absolute;
+		bottom: 0;
+		width: 12px;
+		height: 12px;
+		background-color: #f1f1f5;
+		@include transform(rotate(45deg));
+		border-bottom: 1px solid #f4c3c2;
+		border-right: 1px solid #f4c3c2;
+		left: 0;
+		right: 0;
+		margin: auto;
+		bottom: -7px;
+	}
+}

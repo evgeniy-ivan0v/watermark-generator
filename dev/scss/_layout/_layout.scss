@@ -3,9 +3,14 @@ html, body {
 	height: 100%;
 }
 body {
-	font-family: "robotocondensed-regular", Arial, sans-serif;
+	font-family: "roboto-light-webfont", Arial, sans-serif;
 	font-size: #{$base-font-size}px;
 	color: $text-color; 
+	background-image: url("../images/bg.jpg");
+	// background-size: cover;
+	// background-repeat: no-repeat;
+	background-size: content-box;
+	min-width: 1060px;
 }
 ul, menu {
 	list-style: none;
@@ -18,9 +23,25 @@ ul, menu {
 .page {
 	min-height: 100%;
 	position: relative;
+	padding-top: rem(57);
 	&:after {
 		content: '';
 		height: $footer-height;
 		display: block;
 	}
+}
+
+h1, h2, h3{
+	margin: 0;
+	font-weight: normal;
+}
+
+button{
+	box-shadow: none;
+	border: none;
+	outline: none;
+}
+
+a{
+	text-decoration: none;
 }
