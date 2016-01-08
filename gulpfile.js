@@ -144,7 +144,7 @@ gulp.task('clean', function() {
 });
 
 //сборка dist
-gulp.task('dist', ['extras','fonts','images','jade','compass','browserify']);
+gulp.task('dist', ['compass','extras','fonts','images','jade','browserify']);
 
 gulp.task('build', ['clean'], function () {
   gulp.start('dist');
