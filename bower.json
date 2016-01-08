@@ -2,6 +2,6 @@
   "name": "watermark-generator",
   "version": "1.0.0",
   "dependencies": {
-    "normalize-scss": "normalize.scss#~4.0.3"
+    "jquery": "~2.1.4"
   }
 }

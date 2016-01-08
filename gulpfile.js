@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
   browserSync = require('browser-sync'),
-  rimraf = require('gulp-rimraf'),
+  browserify = require('browserify'),
+  source = require('vinyl-source-stream'),
+  wiredep = require('wiredep').stream,
  	plugin = require('gulp-load-plugins')();
 
 // пути к файлам
@@ -33,6 +35,12 @@ paths = {
     location: 'dev/fonts/**/*.+(eot|svg|ttf|woff|woff2)',
     destination: 'dist/fonts'
   },
+  js: {
+    mainFile: 'dev/js/app.js',
+    locationDev: 'dev/js/**/*.js',
+    location: 'dist/js/**/*.js',
+    destination: 'dist/js/'
+  },
   images: {
     location: 'dev/images/**/*',
     destination: 'dist/images'
@@ -46,6 +54,21 @@ paths = {
     location: 'dist/*.*'
   }
 };
+
+//сборка моделей
+gulp.task('browserify', function () {
+  return browserify(paths.js.mainFile)
+    .bundle()
+    .pipe(source('main.js'))
+    .pipe(gulp.dest(paths.js.destination));
+});
+
+//подключаем bower зависимости
+gulp.task('wiredep', function () {
+  gulp.src(paths.html.location)
+    .pipe(wiredep())
+    .pipe(gulp.dest('dist/'))
+});
 
 //компиляция jade
 gulp.task('jade', function () {
@@ -61,10 +84,13 @@ gulp.task('jade', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.jade.location, ['jade']);
   gulp.watch(paths.scss.location, ['compass']);
+  gulp.watch(paths.js.locationDev, ['browserify']);
   gulp.watch([
     paths.html.location,
-    paths.css.location
+    paths.css.location,
+    paths.js.location
   ]).on('change', browserSync.reload);
+  gulp.watch('bower.json', ['wiredep']);
 });
 
 //запуск сервера
@@ -98,7 +124,7 @@ gulp.task('fonts', function() {
 // Остальные файлы, такие как favicon.ico и пр.
 gulp.task('extras', function () {
   return gulp.src('dev/*.*')
-    .pipe(gulp.dest(paths.dist.location));
+    .pipe(gulp.dest('dist'));
 });
 
 // Картинки
@@ -117,10 +143,24 @@ gulp.task('clean', function() {
     .pipe(plugin.rimraf());
 });
 
-//сборка dist    ПОКА НЕ РАБОТАЕТ
-gulp.task('dist', ['extras','fonts','images','jade','compass'])
+//сборка dist
+gulp.task('dist', ['extras','fonts','images','jade','compass','browserify']);
+
 gulp.task('build', ['clean'], function () {
   gulp.start('dist');
 });
 
-gulp.task('default', ['server', 'watch']);
+gulp.task('default', ['build','server','watch']);
+
+
+var log = function (error) {
+  console.log([
+    '',
+    "----------ERROR MESSAGE START----------",
+    ("[" + error.name + " in " + error.plugin + "]"),
+    error.message,
+    "----------ERROR MESSAGE END----------",
+    ''
+  ].join('\n'));
+  this.end();
+};
