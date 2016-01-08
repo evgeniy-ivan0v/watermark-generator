@@ -98,7 +98,7 @@ gulp.task('fonts', function() {
 // Остальные файлы, такие как favicon.ico и пр.
 gulp.task('extras', function () {
   return gulp.src('dev/*.*')
-    .pipe(gulp.dest(paths.dist.location));
+    .pipe(gulp.dest('dist'));
 });
 
 // Картинки
@@ -117,10 +117,24 @@ gulp.task('clean', function() {
     .pipe(plugin.rimraf());
 });
 
-//сборка dist    ПОКА НЕ РАБОТАЕТ
-gulp.task('dist', ['extras','fonts','images','jade','compass'])
+//сборка dist
+gulp.task('dist', ['extras','fonts','images','jade','compass']);
+
 gulp.task('build', ['clean'], function () {
   gulp.start('dist');
 });
 
-gulp.task('default', ['server', 'watch']);
+gulp.task('default', ['build','server', 'watch']);
+
+
+var log = function (error) {
+  console.log([
+    '',
+    "----------ERROR MESSAGE START----------",
+    ("[" + error.name + " in " + error.plugin + "]"),
+    error.message,
+    "----------ERROR MESSAGE END----------",
+    ''
+  ].join('\n'));
+  this.end();
+};
