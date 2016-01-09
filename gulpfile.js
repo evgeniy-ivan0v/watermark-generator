@@ -1,12 +1,22 @@
 var gulp = require('gulp'),
   browserSync = require('browser-sync'),
-  browserify = require('browserify'),
+  browserify = require('gulp-browserify'),
   source = require('vinyl-source-stream'),
-  //wiredep = require('wiredep').stream,
  	plugin = require('gulp-load-plugins')();
+  
+
+
+// добавление внешних js зависимостей 
+browserify.shim = require('browserify-shim')
+var shim = {
+  jquery : {
+    path: 'dev/bower/jquery/dist/jquery.js',
+    exports: 'jquery'
+  }
+};
 
 // пути к файлам
-paths = {
+var paths = {
  jade: {
     location: 'dev/jade/**/*.jade',
     compiled: 'dev/jade/index.jade',
@@ -55,20 +65,17 @@ paths = {
   }
 };
 
-//сборка моделей
-gulp.task('browserify', function () {
-  return browserify(paths.js.mainFile)
-    .bundle()
-    .pipe(source('main.js'))
+//сборка модулей js
+gulp.task('js', function () {
+  gulp.src(paths.js.mainFile)
+    .pipe(plugin.plumber())
+    .pipe(browserify({
+      debug: true,
+      shim: shim
+    })).on("error", log)
+    .pipe(plugin.rename('main.js'))
     .pipe(gulp.dest(paths.js.destination));
 });
-
-//подключаем bower зависимости
-/*gulp.task('wiredep', function () {
-  gulp.src(paths.html.location)
-    .pipe(wiredep())
-    .pipe(gulp.dest('dist/'))
-});*/
 
 //компиляция jade
 gulp.task('jade', function () {
@@ -76,7 +83,7 @@ gulp.task('jade', function () {
   .pipe(plugin.plumber())
   .pipe(plugin.jade({
       pretty: '\t'
-    }))
+    })).on("error", log)
   .pipe(gulp.dest(paths.jade.destination))
 });
 
@@ -84,13 +91,12 @@ gulp.task('jade', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.jade.location, ['jade']);
   gulp.watch(paths.scss.location, ['compass']);
-  gulp.watch(paths.js.locationDev, ['browserify']);
+  gulp.watch(paths.js.locationDev, ['js']);
   gulp.watch([
     paths.html.location,
     paths.css.location,
     paths.js.location
   ]).on('change', browserSync.reload);
-  //gulp.watch('bower.json', ['wiredep']);
 });
 
 //запуск сервера
@@ -111,7 +117,7 @@ gulp.task('compass', function () {
       config_file: paths.compass.configFile,
       css: paths.compass.cssFolder,
       sass: paths.compass.scssFolder
-    }));
+    })).on("error", log);
 });
 
 // Перенос шрифтов
@@ -144,13 +150,15 @@ gulp.task('clean', function() {
 });
 
 //сборка dist
-gulp.task('dist', ['compass','extras','fonts','images','jade','browserify']);
+gulp.task('dist', ['compass','extras','fonts','images','jade','js']);
 
 gulp.task('build', ['clean'], function () {
   gulp.start('dist');
 });
 
-gulp.task('default', ['build','server','watch']);
+gulp.task('default', ['build','server'], function () {
+  gulp.start('watch');
+});
 
 
 var log = function (error) {

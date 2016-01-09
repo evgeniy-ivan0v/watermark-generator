@@ -26,14 +26,15 @@
     background-position: 0 0, 8px 8px;
     position: relative;
 }
-
+.generator__image-holder {
+	@include absolute-center;
+}
 .generator__main-image{
 	max-height: 100%;
 	max-width: 100%;
-	@include absolute-center;
 }
 .generator__watermark-image {
-	@include absolute-center;
+	position: absolute;
 	z-index: 10;
 	max-height: 100%;
 	max-width: 100%;
