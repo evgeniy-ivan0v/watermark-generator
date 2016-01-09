@@ -22,7 +22,7 @@ var devPanel = (function () {
 	};
 
 	var getSelectValue = function (elem) {
-		var src = "../images/test-image/" + elem.parentElement.querySelector('select').value + ".jpg";
+		var src = "images/test-image/" + elem.parentElement.querySelector('select').value + ".jpg";
 		return src;
 	};
 

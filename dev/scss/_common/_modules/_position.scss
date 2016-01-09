@@ -17,8 +17,8 @@
 	display: inline-block;
 	position: relative;
 	cursor: pointer;
-	width: 19px;
-	height: 19px;
+	width: 20px;
+	height: 20px;
 	border: 1px solid $grey;
 	border-radius: 1px;
 	margin-left: 10px;
@@ -35,8 +35,8 @@
 	&:after {
 		display: block;
 		content: '';
-		width: 13px;
-		height: 13px;
+		width: 14px;
+		height: 14px;
 		border-radius: 2px;
 		background-color: $grey;
 		position: absolute;
@@ -47,13 +47,14 @@
 		border-radius: 0px;
 	}
 	&.tile:before {
-		content:'\2629';
+		content:'+';
 		display: block;
-		font-size: rem(20.8);
+		line-height: 20px;
+		font-size: rem(28);
 		color: #f1f1f5;
 		position: absolute;
-		top: -9px;
-		left: -1px;
+		top: -2px;
+		left: 0px;
 		z-index: 5;
 	}
 }
@@ -149,37 +150,45 @@
 		border-top: none;
 	}
 }
+//unselect mode styles
+.position-wrapper.unselect {
+	& .coords__arrow:hover {
+		border-color: $grey;
+	}
+}
 //single mode styles
 .position-wrapper.single {
 	& .position__item {
 		cursor: pointer;
 		transition: all 0.2s ease;
-		&:hover, &.active {
+		&:hover, &.active__item {
 			background-color: $coral;
 		}
 	}
 	& .coords__name_arrow {
 		display: none;
 	}
+	& .coords__arrow {
+		cursor: pointer;
+	}
 }
 //tile mode styles
 .position-wrapper.tile {
 	& .position__list {
 		position: relative;
-		&:before, &:after {
+		& .watermark__margin {
 			display: block;
 			position: absolute;
-			content: '';
 			background-color: $coral;
 		}
-		&:before {
+		& .vertical {
 			width: 18px;
 			height: 100%;
 			top: 0;
 			left: 50%;
 			margin-left: -9px;
 		}
-		&:after {
+		& .horizontal {
 			width: 100%;
 			height: 18px;
 			top: 50%;
@@ -189,6 +198,9 @@
 	}
 	& .coords__name_text {
 		display: none;
+	}
+	& .coords__arrow {
+		cursor: pointer;
 	}
 	& .coords__input {
 		margin-left: 6px;
