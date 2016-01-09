@@ -1,3 +1,13 @@
 .upload
-	label.settings__row-title= local.rus.default_img
-	label.settings__row-title= local.rus.watermark
+	label.upload__label.upload__label_suorce-img
+		h3.upload__title= local.rus.default_img
+		div(class="upload__fake-input" data-palceholder="Image.jpg")
+			| Image.jpg
+			.upload__btn
+		input(class="upload__file-upload" type="file") 
+
+	label.upload__label.upload__label_watermark.disabled
+		h3.upload__title= local.rus.watermark
+		div(class="upload__fake-input" data-palceholder="Image.png")
+			.upload__btn
+		input(class="upload__file-upload" type="file" disabled)

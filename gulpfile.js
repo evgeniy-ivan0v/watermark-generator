@@ -62,7 +62,6 @@ gulp.task('browserify', function () {
     .pipe(source('main.js'))
     .pipe(gulp.dest(paths.js.destination));
 });
-
 //подключаем bower зависимости
 /*gulp.task('wiredep', function () {
   gulp.src(paths.html.location)
