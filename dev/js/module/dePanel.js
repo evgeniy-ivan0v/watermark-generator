@@ -11,14 +11,14 @@ var devPanel = (function () {
 			image.setAttribute('src', src);
 		} else {
 			crateImg(src, imageClass);
-		};
+		};		
 	};
 
 	var crateImg = function (src, cls){
 		var img = document.createElement('img');
 		img.src = src;
 		img.classList.add(cls);
-		imageArea.appendChild(img);
+		imageArea.appendChild(img);		
 	};
 
 	var getSelectValue = function (elem) {
