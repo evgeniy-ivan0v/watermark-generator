@@ -4,9 +4,8 @@ require('jquery-ui');
 var opacity = (function () {
 
     function _setUpListener() {
-    
+        
         $(document).ready(function() {
-            console.log('ok');
             $( ".opacity__slider" ).slider({
                 range: "min",
                 value: 50,
