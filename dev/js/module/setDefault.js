@@ -76,6 +76,7 @@ var setDefault = (function() {
 					'margin': 0
 				});
 		};	
+
 	return {
 		xmin: xmin,
 		ymin: ymin,

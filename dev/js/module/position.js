@@ -8,6 +8,7 @@ var position = (function() {
 		yInput = $('#y-pos'),
 		posItems = $('.position__item'),
 		watermark = $('.generator__watermark-image'),
+		mainImg = $('.generator__main-image'),
 		mode = setDefault.mode,
 		xmin = setDefault.xmin,
 		ymin = setDefault.ymin,
@@ -17,7 +18,8 @@ var position = (function() {
 	var init = function() {
 		_setUpListeners();
 		_defaultSettings();
-		};
+		console.log(xmax, ymax);
+	};
 	//Начальные настройки для работы с изображениями
 	var _defaultSettings = function() {
 		setDefault.init();
@@ -37,6 +39,7 @@ var position = (function() {
 		$('.switch__item').on('click', _switchMode);
 		$('.position__item').on('click', _blockMove);
 		$('.coords__arrow').on('click', _spinner);
+		inputs.on('change', _writePos);
 	};
 	//Переключаем режим
 	var _switchMode = function() {
@@ -70,35 +73,48 @@ var position = (function() {
 		}
 		
 	};
+	//Обрабатываем ввод значений в инпуты
+	var _writePos = function(e) {
+		//TODO: Форма не должна сабмититься при нажатии enter из инпута
+		// if (e.keyCode == 13) {
+		// 	e.preventDefault();
+		// }		
+		var elem = $(this),
+			newX, newY,
+			currentX = currentCoords(watermark).x,
+			currentY = currentCoords(watermark).y;
+		if (mode === 'single') {
+			if (elem.is('#x-pos')) {
+				newX = condition((parseInt(elem.val())), xmax, xmin).cur;
+				moveWatermark(newX, currentY);
+				changeInput();
+			} else if (elem.is('#y-pos')) {
+				newY = condition((parseInt(elem.val())), ymax, ymin).cur;
+				moveWatermark(currentX, newY);
+				changeInput();
+			}
+		}
+		
+	};
 	//Обрабатываем клики на стрелках инпутов
 	var _spinner = function() {
 		var arrow = $(this),
 			item = arrow.closest('.coords__item'),
 			input = item.find('.coords__input'),
 			delta = 1,
-			currentX = parseInt(watermark.css('left')),
-			currentY = parseInt(watermark.css('top')),
+			currentX = currentCoords(watermark).x,
+			currentY = currentCoords(watermark).y,
 			newX, newY;
 		if (arrow.hasClass('arrow-down')) {
 			delta = -1;
 		}
 		if (mode === 'single') {
 			if (input.is('#x-pos', delta)) {
-				newX = currentX + delta;
-				if (newX > xmax) {
-					newX = xmax;
-				} else if (newX < xmin) {
-					newX = xmin;
-				}
+				newX = condition((currentX + delta), xmax, xmin).cur;
 				moveWatermark(newX, currentY);
 				changeInput();
 			} else if (input.is('#y-pos')) {
-				newY = currentY + delta;
-				if (newY > ymax) {
-					newY = ymax;
-				} else if (newY < ymin) {
-					newY = ymin;
-				}
+				newY = condition((currentY + delta), ymax, ymin).cur;
 				moveWatermark(currentX, newY);
 				changeInput();
 			}
@@ -106,18 +122,39 @@ var position = (function() {
 	}
 	//Записываем новые значения положения в инпуты
 	var changeInput = function() {
-		var newX = parseInt(watermark.css('left')),
-			newY = parseInt(watermark.css('top'));
+		var newX = currentCoords(watermark).x,
+			newY = currentCoords(watermark).y;
 		xInput.val(newX);
 		yInput.val(newY);
 	};
-		
+	//Двигаем вотермарк	
 	var moveWatermark = function(newX, newY) {
 		watermark.css({
 			'top': newY,
 			'left': newX
 		});
 	}
+	//Получаем текущие координаты элемента
+	var currentCoords = function(elem) {
+		var currentX = parseInt(elem.css('left')),
+			currentY = parseInt(elem.css('top'));
+		return {
+			x: currentX,
+			y: currentY
+		}
+	};
+
+	var condition = function(current, max, min) {
+		if (current > max) {
+			current = max;
+		} else if (current < min) {
+			current = min;
+		}
+		return {
+			cur: current
+		}
+
+	};
 
 	return {
 		init: init
