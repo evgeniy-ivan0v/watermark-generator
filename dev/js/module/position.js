@@ -12,13 +12,10 @@ var position = (function() {
 		mode = setDefault.mode,
 		xmin = setDefault.xmin,
 		ymin = setDefault.ymin,
-		xmax = setDefault.xmax,
-		ymax = setDefault.ymax,
 		defPos = setDefault.defPos;
 	var init = function() {
-		_setUpListeners();
 		_defaultSettings();
-		console.log(xmax, ymax);
+		_setUpListeners();
 	};
 	//Начальные настройки для работы с изображениями
 	var _defaultSettings = function() {
@@ -33,6 +30,16 @@ var position = (function() {
 				$(this).addClass('active__item');
 			}
 		});
+	};
+	//Определяем xmax и imax
+	function  _defineMax() {
+		var xmax = mainImg.width() - watermark.width(),
+			ymax = mainImg.height() - watermark.height();
+		return {
+			x: xmax,
+			y: ymax
+		}
+
 	};
 	//Прослушка событий
 	var _setUpListeners = function() {
@@ -82,7 +89,9 @@ var position = (function() {
 		var elem = $(this),
 			newX, newY,
 			currentX = currentCoords(watermark).x,
-			currentY = currentCoords(watermark).y;
+			currentY = currentCoords(watermark).y,
+			xmax = _defineMax().x,
+			ymax = _defineMax().y;
 		if (mode === 'single') {
 			if (elem.is('#x-pos')) {
 				newX = condition((parseInt(elem.val())), xmax, xmin).cur;
@@ -104,6 +113,8 @@ var position = (function() {
 			delta = 1,
 			currentX = currentCoords(watermark).x,
 			currentY = currentCoords(watermark).y,
+			xmax = _defineMax().x,
+			ymax = _defineMax().y,
 			newX, newY;
 		if (arrow.hasClass('arrow-down')) {
 			delta = -1;
