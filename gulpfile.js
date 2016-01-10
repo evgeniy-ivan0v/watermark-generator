@@ -1,19 +1,17 @@
 var gulp = require('gulp'),
   browserSync = require('browser-sync'),
-  browserify = require('gulp-browserify'),
-  source = require('vinyl-source-stream'),
  	plugin = require('gulp-load-plugins')();
   
 
 
 // добавление внешних js зависимостей 
-browserify.shim = require('browserify-shim')
+/*browserify.shim = require('browserify-shim')
 var shim = {
   jquery : {
     path: 'dev/bower/jquery/dist/jquery.js',
     exports: 'jquery'
   }
-};
+};*/
 
 // пути к файлам
 var paths = {
@@ -69,10 +67,7 @@ var paths = {
 gulp.task('js', function () {
   gulp.src(paths.js.mainFile)
     .pipe(plugin.plumber())
-    .pipe(browserify({
-      debug: true,
-      shim: shim
-    })).on("error", log)
+    .pipe(plugin.browserify({debug: true})).on("error", log)
     .pipe(plugin.rename('main.js'))
     .pipe(gulp.dest(paths.js.destination));
 });
