@@ -9,10 +9,15 @@ var setDefault = (function() {
 		ymax = mainImg.height() - watermark.height(),
 		defPos = 'top-left',
 		mode = 'single',
+		marginX = 18,
+		marginY = 18,
+		mxmin = 0,
+		mymin = 0,
 		container = $('.generator__image-holder');
 		//Задаем дефолтные координаты в зависимости от выбранного начального положения
 		function diffPos(pos) {
-			var xstart, ystart;
+			var xstart, ystart,
+				watermark = $('.generator__watermark-image');
 			switch (pos) {
 			case 'top-left':
 				xstart = 0;
@@ -65,9 +70,7 @@ var setDefault = (function() {
 		//Задаем размеры контейнера в зависимости от ширины и высоты основного фото
 			container.css({
 				'width': mainImg.width(),
-				'height': mainImg.height(),
-				'margin': 'auto',
-				'position': 'relative'
+				'height': mainImg.height()
 			});
 		//Помещаем вотермарк в дефолтные координаты
 			watermark.css({
@@ -82,8 +85,12 @@ var setDefault = (function() {
 		ymin: ymin,
 		xmax: xmax,
 		ymax: ymax,
+		mxmin: mxmin,
+		mymin: mymin,
 		defPos: defPos,
 		mode: mode,
+		marginX: marginX,
+		marginY: marginY,
 		init: init,
 		diffPos: diffPos
 	}
