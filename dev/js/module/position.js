@@ -20,8 +20,7 @@ var position = (function() {
 	//Начальные настройки для работы с изображениями
 	var _defaultSettings = function() {
 		setDefault.init();
-		posBlock.removeClass('unselect')
-				.addClass(mode);
+		posBlock.removeClass('unselect').addClass(mode);
 		inputs.attr('disabled', false);
 		xInput.val(xmin);
 		yInput.val(ymin);
@@ -46,7 +45,7 @@ var position = (function() {
 		$('.switch__item').on('click', _switchMode);
 		$('.position__item').on('click', _blockMove);
 		$('.coords__arrow').on('click', _spinner);
-		inputs.on('change', _writePos);
+		inputs.on('keydown', _writePos);
 	};
 	//Переключаем режим
 	var _switchMode = function() {
@@ -83,9 +82,10 @@ var position = (function() {
 	//Обрабатываем ввод значений в инпуты
 	var _writePos = function(e) {
 		//TODO: Форма не должна сабмититься при нажатии enter из инпута
-		// if (e.keyCode == 13) {
-		// 	e.preventDefault();
-		// }		
+		if (e.keyCode === 13) {
+			e.preventDefault();
+		}
+		console.log('keydown');		
 		var elem = $(this),
 			newX, newY,
 			currentX = currentCoords(watermark).x,
@@ -103,7 +103,6 @@ var position = (function() {
 				changeInput();
 			}
 		}
-		
 	};
 	//Обрабатываем клики на стрелках инпутов
 	var _spinner = function() {
