@@ -1,10 +1,20 @@
 var gulp = require('gulp'),
   browserSync = require('browser-sync'),
-  rimraf = require('gulp-rimraf'),
  	plugin = require('gulp-load-plugins')();
+  
+
+
+// добавление внешних js зависимостей 
+/*browserify.shim = require('browserify-shim')
+var shim = {
+  jquery : {
+    path: 'dev/bower/jquery/dist/jquery.js',
+    exports: 'jquery'
+  }
+};*/
 
 // пути к файлам
-paths = {
+var paths = {
  jade: {
     location: 'dev/jade/**/*.jade',
     compiled: 'dev/jade/index.jade',
@@ -33,6 +43,12 @@ paths = {
     location: 'dev/fonts/**/*.+(eot|svg|ttf|woff|woff2)',
     destination: 'dist/fonts'
   },
+  js: {
+    mainFile: 'dev/js/app.js',
+    locationDev: 'dev/js/**/*.js',
+    location: 'dist/js/**/*.js',
+    destination: 'dist/js/'
+  },
   images: {
     location: 'dev/images/**/*',
     destination: 'dist/images'
@@ -47,13 +63,22 @@ paths = {
   }
 };
 
+//сборка модулей js
+gulp.task('js', function () {
+  gulp.src(paths.js.mainFile)
+    .pipe(plugin.plumber())
+    .pipe(plugin.browserify({debug: true})).on("error", log)
+    .pipe(plugin.rename('main.js'))
+    .pipe(gulp.dest(paths.js.destination));
+});
+
 //компиляция jade
 gulp.task('jade', function () {
   gulp.src(paths.jade.compiled)
   .pipe(plugin.plumber())
   .pipe(plugin.jade({
       pretty: '\t'
-    }))
+    })).on("error", log)
   .pipe(gulp.dest(paths.jade.destination))
 });
 
@@ -61,9 +86,11 @@ gulp.task('jade', function () {
 gulp.task('watch', function () {
   gulp.watch(paths.jade.location, ['jade']);
   gulp.watch(paths.scss.location, ['compass']);
+  gulp.watch(paths.js.locationDev, ['js']);
   gulp.watch([
     paths.html.location,
-    paths.css.location
+    paths.css.location,
+    paths.js.location
   ]).on('change', browserSync.reload);
 });
 
@@ -85,7 +112,7 @@ gulp.task('compass', function () {
       config_file: paths.compass.configFile,
       css: paths.compass.cssFolder,
       sass: paths.compass.scssFolder
-    }));
+    })).on("error", log);
 });
 
 // Перенос шрифтов
@@ -98,7 +125,7 @@ gulp.task('fonts', function() {
 // Остальные файлы, такие как favicon.ico и пр.
 gulp.task('extras', function () {
   return gulp.src('dev/*.*')
-    .pipe(gulp.dest(paths.dist.location));
+    .pipe(gulp.dest('dist'));
 });
 
 // Картинки
@@ -117,10 +144,26 @@ gulp.task('clean', function() {
     .pipe(plugin.rimraf());
 });
 
-//сборка dist    ПОКА НЕ РАБОТАЕТ
-gulp.task('dist', ['extras','fonts','images','jade','compass'])
+//сборка dist
+gulp.task('dist', ['compass','extras','fonts','images','jade','js']);
+
 gulp.task('build', ['clean'], function () {
   gulp.start('dist');
 });
 
-gulp.task('default', ['dist', 'server', 'watch']);
+gulp.task('default', ['build','server'], function () {
+  gulp.start('watch');
+});
+
+
+var log = function (error) {
+  console.log([
+    '',
+    "----------ERROR MESSAGE START----------",
+    ("[" + error.name + " in " + error.plugin + "]"),
+    error.message,
+    "----------ERROR MESSAGE END----------",
+    ''
+  ].join('\n'));
+  this.end();
+};

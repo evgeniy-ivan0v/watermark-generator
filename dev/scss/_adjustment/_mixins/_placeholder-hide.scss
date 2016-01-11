@@ -1,0 +1,18 @@
+@mixin placeholder-hide {
+	:focus::-webkit-input-placeholder {
+	color: transparent;
+	transition: all 0.2s ease; 
+	}
+	:focus::-moz-placeholder {
+	color: transparent;
+	transition: all 0.2s ease; 
+	}
+	:focus:-moz-placeholder {
+	color: transparent;
+	transition: all 0.2s ease; 
+	}
+	:focus:-ms-input-placeholder {
+	color: transparent;
+	transition: all 0.2s ease; 
+	}
+}

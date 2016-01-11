@@ -1,0 +1,9 @@
+@mixin block-size ($width, $height) {
+	width: $width;
+	height: $height;
+}
+
+@mixin block-square ($size) {
+	width: $size;
+	height: $size;
+}

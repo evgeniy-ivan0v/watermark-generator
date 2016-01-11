@@ -1,0 +1,27 @@
+- var positions = ['top-left', 'top-center', 'top-right', 'middle-left', 'middle-center', 'middle-right', 'bottom-left', 'bottom-center', 'bottom-right']
+- var coords = ['x', 'y']
+.position
+	.position__header-wrapper
+		h3.settings__row-title.position__header= local.rus.position_title 
+		ul.switch__list
+			li.switch__item.tile
+			li.switch__item.single.active
+	.position-wrapper.unselect
+		ul.position__list
+			each item in positions
+				li(class="position__item", data-position="#{item}")
+			span.watermark__margin.vertical
+			span.watermark__margin.horizontal
+		ul.coords__list
+			each coord in coords
+				li.coords__item
+					label.coords__name
+						span(class="coords__name_arrow #{coord}")
+						span.coords__name_text= coord
+					input(type="text", name="position-#{coord}", placeholder="0", class="coords__input", id="#{coord}-pos", disabled)
+					.coords__arrows
+						span.coords__arrow.arrow-up
+						span.coords__arrow.arrow-down
+
+
+
