@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
   browserSync = require('browser-sync'),
+  php = require('gulp-connect-php'),
  	plugin = require('gulp-load-plugins')();
   
 
@@ -49,6 +50,9 @@ var paths = {
     location: 'dist/js/**/*.js',
     destination: 'dist/js/'
   },
+  php: {
+    location: './dist/backend/**/*.php'
+  },
   images: {
     location: 'dev/images/**/*',
     destination: 'dist/images'
@@ -90,12 +94,20 @@ gulp.task('watch', function () {
   gulp.watch([
     paths.html.location,
     paths.css.location,
-    paths.js.location
+    paths.js.location,
+    paths.php.location
   ]).on('change', browserSync.reload);
 });
 
+gulp.task('php', function() {
+    php.server({ 
+      base: '/dist',
+      keepalive: true
+    });
+});
+
 //запуск сервера
-gulp.task('server', function () {
+gulp.task('server',['php'], function () {
   browserSync({
     port: 9000,
     server: {
@@ -128,6 +140,11 @@ gulp.task('extras', function () {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('extrasphp', function () {
+  return gulp.src('dev/backend/**/*.*')
+    .pipe(gulp.dest('dist/backend'));
+});
+
 // Картинки
 gulp.task('images', function () {
   return gulp.src(paths.images.location)
@@ -145,7 +162,7 @@ gulp.task('clean', function() {
 });
 
 //сборка dist
-gulp.task('dist', ['compass','extras','fonts','images','jade','js']);
+gulp.task('dist', ['compass','extras','extrasphp','fonts','images','jade','js']);
 
 gulp.task('build', ['clean'], function () {
   gulp.start('dist');
