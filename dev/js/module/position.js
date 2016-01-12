@@ -1,225 +1,151 @@
 var $ = require('jquery');
+var opt = require('./options.js');
+var common = require('./common.js');
 var setDefault = require('./setDefault.js');
 var tile = require('./tile.js');
 
 var position = (function() {
-	var posBlock = $('.position-wrapper'),
-		inputs = $('.coords__input'),
-		xInput = $('#x-pos'),
-		yInput = $('#y-pos'),
-		posItems = $('.position__item'),
-		mainImg = $('.generator__main-image'),
-		mode = setDefault.mode,
-		xmin = setDefault.xmin,
-		ymin = setDefault.ymin,
-		mxmin = setDefault.mxmin,
-		mymin = setDefault.mymin,
-		marginX = setDefault.marginX,
-		marginY = setDefault.marginY,
-		defPos = setDefault.defPos;
+	var mode = opt.mode,
+		switchItem = $('.switch__item');
+
+	//Инициализируем модуль: устанавливаем прослушку событий и 
+	//ставим вотермарк в дефолтные настройки	
 	var init = function() {
-		_defaultSettings();
+		setDefault.init();
 		_setUpListeners();
 	};
-	//Начальные настройки для работы с изображениями
-	var _defaultSettings = function() {
-		setDefault.init();
-		posBlock.removeClass('unselect').addClass(mode);
-		$('.switch__list').removeClass('unselect-list');
-		inputs.attr('disabled', false);
-		xInput.val(xmin);
-		yInput.val(ymin);
-		posItems.each(function() {
-			if ($(this).data('position') === defPos) {
-				$(this).addClass('active__item');
-			}
-		});
-	};
-	//Определяем xmax и imax
-	function  _defineMax() {
-		var	xmax = mainImg.width() - defineMark().width(),
-			ymax = mainImg.height() - defineMark().height();
-		return {
-			x: xmax,
-			y: ymax
-		}
 
-	};
 	//Прослушка событий
 	var _setUpListeners = function() {
-		$('.switch__item').on('click', _switchMode);
+		switchItem.on('click', _switchMode);
 		$('.position__item').on('click', _blockMove);
 		$('.coords__arrow').on('click', _spinner);
-		inputs.on('keyup', _writePos);
+		common.inputs.on('keyup', _writePos);
+		$('.button__reset').on('click', setDefault.resetPos);
+		$('.button__submit').on('click', getVars);
 	};
+
 	//Переключаем режим
 	var _switchMode = function() {
 		var item = $(this),
-			items = $('.switch__item');
+			items = switchItem;
 		items.removeClass('active');
 		item.addClass('active');
 		if (item.hasClass('single')) {
-			posBlock.removeClass('tile')
-					.addClass('single');
-			posItems.removeClass('active__item');
-			posItems.first().addClass('active__item');
+			common.posBlock.removeClass('tile').addClass('single');
+			common.classBox(opt.defPos);
 			mode = 'single';
+			opt.mode = mode;
 			tile.remove();
-			changeInput();
+			common.changeIn();
 		} else if (item.hasClass('tile')) {
-			var defMx = condition(marginX, _defineMax().y, mxmin).cur,
-				defMy = condition(marginY, _defineMax().x, mymin).cur;
-			posBlock.removeClass('single').addClass('tile');
+			var defMx = common.cnd(opt.marginX, opt.minY, common.setbr().y),
+				defMy = common.cnd(opt.marginY, opt.minX, common.setbr().x);
+			common.posBlock.removeClass('single').addClass('tile');
 			mode = 'tile';
-			posItems.removeClass('active__item');
+			opt.mode = mode;
+			common.posItems.removeClass('active__item');
 			tile.remove();
 			tile.tiling(defMx, defMy);
-			tile.setInputs(defMx, defMy);
-			tile.lineWidth(defMx, defMy);
 		}
 	};
+
 	//Двигаем вотермарк при клике на позиции в режиме single
 	var _blockMove = function() {
-		var choosenPos = $(this).data('position'),
-			items = $('.position__item'),
-			choosenItem = $(this);
-			
+		var choosenPos = $(this).data('position');
+					
 		if (mode === 'single') {
-			moveWatermark(setDefault.diffPos(choosenPos).xPos, setDefault.diffPos(choosenPos).yPos);
-			items.removeClass('active__item');
-			choosenItem.addClass('active__item');			
+			common.move(common.grid(choosenPos).xPos, common.grid(choosenPos).yPos);
+			common.classBox(choosenPos);			
 		}
 		
 	};
+
 	//Обрабатываем ввод значений в инпуты
-	var _writePos = function(e) {
-		//TODO: Форма не должна сабмититься при нажатии enter из инпута
-		if (e.keyCode === 13) {
-			e.preventDefault();
+	var _writePos = function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
 		}
 		var elem = $(this),
 			newX, newY, newMx, newMy,
-			currentX = currentCoords(defineMark()).x,
-			currentY = currentCoords(defineMark()).y,
-			currentMx = parseInt(xInput.val()),
-			currentMy = parseInt(yInput.val()),
-			xmax = _defineMax().x,
-			ymax = _defineMax().y,
+			currentX = common.defcoords(common.defmark()).x,
+			currentY = common.defcoords(common.defmark()).y,
+			currentMx = parseInt(common.xInput.val()),
+			currentMy = parseInt(common.yInput.val()),
+			xmax = common.setbr().x,
+			ymax = common.setbr().y,
 			pattern = /^\d+$/;
 		if ((mode === 'single') & (pattern.test(elem.val()))) {
-			posItems.removeClass('active__item');
+			common.posItems.removeClass('active__item');
 			if (elem.is('#x-pos')) {
-				newX = condition((parseInt(elem.val())), xmax, xmin).cur;
-				moveWatermark(newX, currentY);
+				newX = common.cnd((parseInt(elem.val())), opt.minX, xmax);
+				common.move(newX, currentY);
 			} else if (elem.is('#y-pos')) {
-				newY = condition((parseInt(elem.val())), ymax, ymin).cur;
-				moveWatermark(currentX, newY);
+				newY = common.cnd((parseInt(elem.val())), opt.minY, ymax);
+				common.move(currentX, newY);
 			}
 		} else if ((mode === 'tile') & (pattern.test(elem.val()))) {
-			tile.remove();
 			if (elem.is('#x-pos')) {
-				newMx = condition((parseInt(elem.val())), ymax, mxmin).cur;
-				tile.tiling(newMx, currentMy);
-				tile.setInputs(newMx, currentMy);
-				tile.lineWidth(newMx, currentMy);
+				newMx = common.cnd((parseInt(elem.val())), opt.minY, ymax);
+				tile.changeMargin(newMx, currentMy);
 			} else if (elem.is('#y-pos')) {
-				newMy = condition((parseInt(elem.val())), xmax, mymin).cur;
-				tile.tiling(currentMx, newMy);
-				tile.setInputs(currentMx, newMy);
-				tile.lineWidth(currentMx, newMy);
+				newMy = common.cnd((parseInt(elem.val())), opt.minX, xmax);
+				tile.changeMargin(currentMx, newMy);
 			}
 		} else {
 			console.log('Вы ввели не цифру');
 		}
 	};
+
 	//Обрабатываем клики на стрелках инпутов
 	var _spinner = function() {
 		var arrow = $(this),
 			item = arrow.closest('.coords__item'),
 			input = item.find('.coords__input'),
 			delta = 1,
-			currentX = currentCoords(defineMark()).x,
-			currentY = currentCoords(defineMark()).y,
-			currentMx = parseInt(xInput.val()),
-			currentMy = parseInt(yInput.val()),
-			xmax = _defineMax().x,
-			ymax = _defineMax().y,
+			currentX = common.defcoords(common.defmark()).x,
+			currentY = common.defcoords(common.defmark()).y,
+			currentMx = parseInt(common.xInput.val()),
+			currentMy = parseInt(common.yInput.val()),
+			xmax = common.setbr().x,
+			ymax = common.setbr().y,
 			newX, newY, newMx, newMy;
 		if (arrow.hasClass('arrow-down')) {
 			delta = -1;
 		}
 		if (mode === 'single') {
-			posItems.removeClass('active__item');
+			common.posItems.removeClass('active__item');
 			if (input.is('#x-pos')) {
-				newX = condition((currentX + delta), xmax, xmin).cur;
-				moveWatermark(newX, currentY);
+				newX = common.cnd((currentX + delta), opt.minX, xmax);
+				common.move(newX, currentY);
 			} else if (input.is('#y-pos')) {
-				newY = condition((currentY + delta), ymax, ymin).cur;
-				moveWatermark(currentX, newY);
+				newY = common.cnd((currentY + delta), opt.minY, ymax);
+				common.move(currentX, newY);
 			}
 		} else if (mode === 'tile') {
-			tile.remove();
-			console.log(xmax, ymax);
 			if (input.is('#x-pos')) {
-				newMx = condition((currentMx + delta), ymax, mxmin).cur;
-				tile.tiling(newMx, currentMy);
-				tile.setInputs(newMx, currentMy);
-				tile.lineWidth(newMx, currentMy);
+				newMx = common.cnd((currentMx + delta), opt.minY, ymax);
+				tile.changeMargin(newMx, currentMy);
 			} else if (input.is('#y-pos')) {
-				newMy = condition((currentMy + delta), xmax, mymin).cur;
-				tile.tiling(currentMx, newMy);
-				tile.setInputs(currentMx, newMy);
-				tile.lineWidth(currentMx, newMy);
+				newMy = common.cnd((currentMy + delta), opt.minX, xmax);
+				tile.changeMargin(currentMx, newMy);
 			}
 		}
 	};
-	//Определяем вотермарк
-	var defineMark = function() {
-		var watermark = $('.generator__watermark-image');
-		return watermark;
-	};
-	//Записываем новые значения положения в инпуты
-	var changeInput = function() {
-		var newX = currentCoords(defineMark()).x,
-			newY = currentCoords(defineMark()).y;
-		xInput.val(newX);
-		yInput.val(newY);
-	};
-	//Двигаем вотермарк	
-	var moveWatermark = function(newX, newY) {
-		defineMark().animate({
-			'top': newY,
-			'left': newX
-		}, 150, function() {
-			changeInput();
-		});
-	}
-	//Получаем текущие координаты элемента
-	var currentCoords = function(elem) {
-		var currentX = parseInt(elem.css('left')),
-			currentY = parseInt(elem.css('top'));
-		return {
-			x: currentX,
-			y: currentY
-		}
-	};
-	//Ограничиваем максимальное и минимальное значение
-	var condition = function(current, max, min) {
-		if (current > max) {
-			current = max;
-		} else if (current < min) {
-			current = min;
-		}
-		return {
-			cur: current
-		}
 
+	//Собираем данные для сабмита
+	var getVars = function(event) {
+		event.preventDefault();
+		data = {
+			'mode': opt.mode,
+			'xPos': common.xInput.val(),
+			'yPos': common.yInput.val()
+		};
+		console.log(data);
 	};
-
+	
 	return {
-		init: init,
-		setVal: changeInput,
-		move: moveWatermark
+		init: init
 	}
 
 })();

@@ -1,71 +1,99 @@
 var $ = require('jquery');
 var setDefault = require('./setDefault.js');
+var common = require('./common.js');
+var opt = require('./options.js');
 
 var tile = (function() {
-	var mainImg = $('.generator__main-image'),
-		container = $('.generator__image-holder'),
-		marginX = setDefault.marginX,
-		marginY = setDefault.marginY,
-		inputs = $('.coords__input'),
-		xInput = $('#x-pos'),
-		yInput = $('#y-pos');
-
-	//Инициализирует режим плитки с дефолтными настройками
-	var init = function() {
-		tiling(marginX, marginY);
-		setInputs(marginX, marginY);
-	};
+			
 	//Отрисовывает плитку
 	var tiling = function(mx, my) {
-		var qtyRow, qtyCol,
-			watermark = $('.generator__watermark-image');					
-		qtyRow = Math.ceil(mainImg.width()/watermark.width()) + 1;
-		qtyCol = Math.ceil(mainImg.height()/watermark.height()) + 1;
-		for (var j = 0; j < qtyCol; j++) {
-			for (var i = 0; i < qtyRow; i++) {
-				var currentClone = watermark.clone();
-				currentClone.css({
-					'top': (watermark.height() + mx)*(j - 1),
-					'left': (watermark.width() + my)*(i - 1)
-				});
-				currentClone.appendTo(container);
-			}
+		var qtyRow, qtyCol, wrapper,
+			watermark = common.defmark(),
+			markup = '<div class="marks-tile__wrapper">';
+			common.container.append(markup);
+			wrapper = $('.marks-tile__wrapper');
+		wrapperSize(mx, my);
+
+		for (var i = 0; i < countMarks().qtyRow * countMarks().qtyCol; i++) {
+			var currentClone = watermark.clone();
+			currentClone.css({
+					'position': 'relative',
+					'margin-right': my,
+					'margin-bottom': mx,
+					'width': watermark.width(),
+					'height':watermark.height()
+			});
+			currentClone.appendTo(wrapper);
 		}
 		watermark.remove();
+		setInputs(mx, my);
+		lineWidth(mx, my);
 	};
+
 	//Устанавливает значения инпутов
 	var setInputs = function(mx, my) {
-		xInput.val(mx);
-		yInput.val(my);
+		common.xInput.val(mx);
+		common.yInput.val(my);
 	};
+
 	//Убирает плитку, оставляя только один вотермарк в top-left
 	var removeTile = function() {
 		var watermarks = $('.generator__watermark-image'),
-			oneWatermark = watermarks.first().clone();
+			oneWatermark = watermarks.first().clone(),
+			wrapper = $('.marks-tile__wrapper');
 		watermarks.remove();
-		oneWatermark.css({'top': 0, 'left': 0});
-		oneWatermark.appendTo(container);
+		wrapper.remove();
+		oneWatermark.css({'top': 0, 'left': 0, 'position': 'absolute'});
+		oneWatermark.appendTo(common.container);
 	};
+
 	//Меняет ширину полоски
 	var lineWidth = function(mx, my) {
 		var horLine = $('.watermark__margin.horizontal'),
 			verLine = $('.watermark__margin.vertical');
 		horLine.css({
-			'height': mx,
-			'margin-top': -mx/2
+			'height': mx/3,
+			'margin-top': -mx/6
 		});
 		verLine.css({
-			'width': my,
-			'margin-left': -my/2
+			'width': my/3,
+			'margin-left': -my/6
 		});
 	};
 
+	//Меняет марджины у вотермарков
+	var changeMargin = function(mx, my) {
+		common.defmark().css({'margin-right': my, 'margin-bottom': mx});
+		wrapperSize(mx, my);
+		lineWidth(mx, my);
+		setInputs(mx, my);
+	};
+
+	//Рассчитывает количество вотермарков
+	var countMarks = function() {
+		var watermark = common.defmark().first(),
+			qtyRow = Math.ceil(common.mainImg.width()/watermark.width()),
+			qtyCol = Math.ceil(common.mainImg.height()/watermark.height());
+		return {
+			qtyRow: qtyRow,
+			qtyCol: qtyCol
+		}
+	}
+
+	//Задает размер обертки 
+	var wrapperSize = function(mx, my) {
+		var	watermark = common.defmark().first(),
+			wrapper = $('.marks-tile__wrapper');
+
+		wrapper.css({ 'width': countMarks().qtyRow*(watermark.width() + my),
+					  'height': countMarks().qtyCol*(watermark.height() + mx)
+					});
+	};
+
 	return {
-		init:init,
 		tiling: tiling,
 		remove: removeTile,
-		setInputs: setInputs,
-		lineWidth: lineWidth
+		changeMargin: changeMargin
 	}
 })();
 
