@@ -1,0 +1,50 @@
+.opacity {
+	padding: 10px 20px 30px;
+}
+
+.opacity__title {
+	font-size: rem(14);
+	line-height: rem(16);
+	margin-bottom: 30px;
+}
+
+.ui-slider-horizontal {
+	height: 3px;
+	border-radius: 2px;
+	background: #dbe1e8;
+	width: 220px;
+}
+
+.ui-slider-range {
+	height: 3px;
+	background: $gray;
+	border-radius: 2px
+}
+
+.ui-slider-handle {
+	display: block;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	position: relative;
+	background :#dbe1e8;
+	margin-top: -12px;
+	margin-left: -12px;
+	box-shadow: 0 1px 3px 0 $gray;
+	outline: none;
+	top: -2px;
+
+	&:after {
+		display: block;
+		background: $gray;
+		border-radius: 50%;
+		position: absolute;
+		content: '';
+		width: 8px;
+		height: 8px;
+		@include absolute-center;
+	}
+
+}
+
+

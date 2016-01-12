@@ -25,7 +25,7 @@ var devPanel = (function () {
 		var img = document.createElement('img');
 		img.src = src;
 		img.classList.add(cls);
-		imageArea.appendChild(img);
+		imageArea.appendChild(img);		
 	};
 
 	var getSelectValue = function (elem) {
