@@ -3,6 +3,7 @@ var opt = require('./options.js');
 var common = require('./common.js');
 var setDefault = require('./setDefault.js');
 var tile = require('./tile.js');
+var drag = require('./drag.js');
 
 var position = (function() {
 	var mode = opt.mode,
@@ -38,6 +39,7 @@ var position = (function() {
 			opt.mode = mode;
 			tile.remove();
 			common.changeIn();
+			drag.single();
 		} else if (item.hasClass('tile')) {
 			var defMx = common.cnd(opt.marginX, opt.minY, common.setbr().y),
 				defMy = common.cnd(opt.marginY, opt.minX, common.setbr().x);
@@ -47,6 +49,7 @@ var position = (function() {
 			common.posItems.removeClass('active__item');
 			tile.remove();
 			tile.tiling(defMx, defMy);
+			drag.tile();
 		}
 	};
 

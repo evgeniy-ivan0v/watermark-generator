@@ -43,7 +43,12 @@ var tile = (function() {
 			wrapper = $('.marks-tile__wrapper');
 		watermarks.remove();
 		wrapper.remove();
-		oneWatermark.css({'top': 0, 'left': 0, 'position': 'absolute'});
+		oneWatermark.css({
+			'top': 0, 
+			'left': 0, 
+			'position': 'absolute', 
+			'margin': 0
+		});
 		oneWatermark.appendTo(common.container);
 	};
 

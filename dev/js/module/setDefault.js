@@ -2,6 +2,7 @@ var $ = require('jquery');
 var common = require('./common.js');
 var opt = require('./options.js');
 var position = require('./position.js');
+var drag = require('./drag.js');
 
 var setDefault = (function() {
 			
@@ -24,6 +25,8 @@ var setDefault = (function() {
 			common.inputs.attr('disabled', false);
 			common.changeIn();
 			common.classBox(opt.defPos);
+
+			drag.single();
 		};
 
 	var resetPos = function(event) {
