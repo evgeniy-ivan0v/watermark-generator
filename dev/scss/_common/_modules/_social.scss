@@ -1,0 +1,35 @@
+.socials__item{
+	height: 41px;
+	width: 43px;
+}
+
+.socials__link{
+	height: 100%;
+	background-color: #d7d3d1;
+	display: block;
+	text-indent: 100%;
+  	white-space: nowrap;
+  	overflow: hidden;
+	position: relative;
+
+	&:before{
+		@include transform (translate(-50%,-50%));
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+
+	$socials: like, facebook, twitter, vk;
+  	@each $item in $socials {
+   		&-#{$item}:before {
+    		$icon-width: icons-sprite-width($item);
+    		$icon-height: icons-sprite-height($item);
+    		@include icons-sprite($item);
+    		@include block-size ($icon-width, $icon-height);
+   		}
+	   	&-#{$item}:hover:before {
+	    	@include icons-sprite($item + '_hover');
+	   	}
+  	}
+}

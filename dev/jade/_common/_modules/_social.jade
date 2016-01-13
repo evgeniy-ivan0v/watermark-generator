@@ -1,0 +1,5 @@
+ul.socials
+	- var socials = ['like', 'facebook', 'twitter', 'vk']
+	each item in socials
+		li(class="socials__item social__item-#{item}")
+			a(href="#" class="socials__link socials__link-#{item}")= item
