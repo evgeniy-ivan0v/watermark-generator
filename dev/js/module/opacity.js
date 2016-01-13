@@ -16,6 +16,7 @@ var opacity = (function () {
                     $('.generator__watermark-image').css('opacity', value);
                 }
             });
+            $( ".opacity__slider" ).slider("disable");
         });    
     };
 
