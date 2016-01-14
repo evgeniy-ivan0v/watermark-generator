@@ -13,16 +13,22 @@ $red: #f97e76;
 
 .upload__fake-input {
 	position: relative;
-	width: 220px;
 	height: 28px;
 	border: 1px solid $gray;
 	border-radius: 5px;
 	box-sizing: border-box;
-	color: $gray;
 	margin-bottom: 25px;
+	
+}
+
+.upload__input-text {
 	line-height: 25px;
 	padding-left: 5px;
 	font-size: rem(12);
+	color: $gray;
+	width: 178px;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 
 .upload__btn {

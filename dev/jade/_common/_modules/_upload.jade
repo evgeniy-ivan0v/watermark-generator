@@ -1,14 +1,14 @@
 .upload
 	label.upload__label.upload__label_suorce-img
 		h3.upload__title= local.rus.default_img
-		div(class="upload__fake-input upload__fake-input_img" data-placeholder="Image.jpg")
+		div(class="upload__fake-input upload__fake-input-wrapper_img" data-placeholder="Image.jpg")
 			.upload__input-text
 			.upload__btn
-		input(class="upload__file-upload" type="file") 
+		input(class="upload__file-upload" type="file" data-img-class="generator__main-image") 
 
 	label.upload__label.upload__label_watermark
 		h3.upload__title= local.rus.watermark
-		div(class="upload__fake-input upload__fake-input_watermark" data-placeholder="Image.png")
+		div(class="upload__fake-input upload__fake-input-wrapper_watermark" data-placeholder="Image.png")
 			.upload__input-text
 			.upload__btn
-		input(class="upload__file-upload" type="file" )
+		input(class="upload__file-upload upload__file-upload_watermark" type="file" data-img-class="generator__watermark-image" )
