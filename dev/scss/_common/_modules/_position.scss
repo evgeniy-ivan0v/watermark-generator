@@ -17,6 +17,24 @@
 	float: right;
 	font-size: 0;
 	max-width: 60px;
+	&.unselect-list {
+		opacity: 0.7;
+		& .switch__item {
+			cursor: default;
+			&:hover {
+				border-color: $grey;
+			}
+			&:hover:after {
+				background-color: $grey;
+			}
+			&.active:hover {
+				border-color: $coral;
+			}
+			&.active:hover:after {
+				background-color: $coral;
+			}
+		}
+	}
 }
 .switch__item {
 	display: inline-block;
@@ -155,12 +173,6 @@
 		border-top: none;
 	}
 }
-// //unselect mode styles
-// .position-wrapper.unselect {
-// 	& .coords__arrow:hover {
-// 		border-color: $grey;
-// 	}
-// }
 //single mode styles
 .position-wrapper.single {
 	& .position__item {
