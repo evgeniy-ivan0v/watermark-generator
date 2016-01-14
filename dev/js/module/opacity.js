@@ -14,9 +14,7 @@ var opacity = (function () {
       };
 
   var setOpasity = function (event, ui) {
-          if(!$watermark.is('.generator__watermark-image')){
-              $watermark = $('.generator__watermark-image');
-          };
+          $watermark = $('.generator__watermark-image');
           value = ($elem.slider("value"))/100;
           $watermark.css('opacity', value);
       };
@@ -25,15 +23,17 @@ var opacity = (function () {
       $elem.slider(option)
   };
 
+  function getWatermark() {
+    return $watermark = $('.generator__watermark-image');
+  }
+
   var enable = function () {
       option.disabled = false;
       option.slide = setOpasity;
       setDefault(); 
   };
   var setDefault = function () {
-      if(!$watermark.is('.generator__watermark-image')){
-          $watermark = $('.generator__watermark-image');
-      };
+      $watermark = $('.generator__watermark-image');
       $watermark.css('opacity', (option.value/100));
       $elem.slider(option);
   };

@@ -73,9 +73,9 @@ var uploadModule = (function () {
             if(className === 'generator__main-image') {
                 setSizeHolder(self);
                 enableModule.watermark();
-                //console.log(enableModule)
             } else {
                 enableModule.all();
+                //console.log('ffgfgfgf')
             }
         });
     };
