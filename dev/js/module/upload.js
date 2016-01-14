@@ -16,8 +16,7 @@ var uploadModule = (function () {
             _placeholder();
             _isDisabled();    
         }); 
-        $('.upload__file-upload').on('change', _fileUpload);
-        $('.button__reset').on('click', _resetUploading);   
+        $('.upload__file-upload').on('change', _fileUpload);   
     };
 
     function _isDisabled() {
@@ -69,16 +68,15 @@ var uploadModule = (function () {
 				.appendTo('.generator__canvas')
 				.addClass(imgClass);
 
-			 fileNameField.text(img.file.name);
+			fileNameField.text(img.file.name);
 
-			 if (imgClass == 'generator__main-image') {
+			if (imgClass == 'generator__main-image') {
 			 	imgFlag = true;
-			 } else {
+			} else {
 			 	wmFlag =true;
-			 };
-			 _isDisabled();
+			};
+			_isDisabled();
 
-			 console.log(imgFlag, wmFlag);
 
     	} else {
     		$('.generator__canvas').find('.' + imgClass).remove();
@@ -114,35 +112,30 @@ var uploadModule = (function () {
  			});
  	};
 
- 	function _resetUploading() {
- 		$(document).find('input[file=file]').disable();
- 		_placeholder();
 
- 	}
-
- 	function _showFileName(name) {
+ // 	function _showFileName(name) {
 
  		
 
-	 	var $this = $(this),
-	 		lbl = $this.closest('label'),
-	 		fileName = lbl.find('.upload__input-text');
+	//  	var $this = $(this),
+	//  		lbl = $this.closest('label'),
+	//  		fileName = lbl.find('.upload__input-text');
 	
 
 
-		lbl
-			.closest('form')
-			.find('input:disabled')
-			.attr('disabled', false);
+	// 	lbl
+	// 		.closest('form')
+	// 		.find('input:disabled')
+	// 		.attr('disabled', false);
 
-		lbl
-			.closest('form')
-			.find('.disabled')
-			.removeClass('disabled');
+	// 	lbl
+	// 		.closest('form')
+	// 		.find('.disabled')
+	// 		.removeClass('disabled');
 
-		$(fileName).text(name);
+	// 	$(fileName).text(name);
 
-	};
+	// };
 
 	
 

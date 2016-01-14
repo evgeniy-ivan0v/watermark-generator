@@ -8,7 +8,7 @@ var opacity = (function () {
         $(document).ready(function() {
             $( ".opacity__slider" ).slider({
                 range: "min",
-                value: 50,
+                value: 75,
                 min: 0,
                 max: 100,
                 slide: function( event, ui ) {
