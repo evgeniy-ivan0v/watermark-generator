@@ -1,11 +1,10 @@
 .opacity {
-	padding: 10px 20px 30px;
+	padding: 0px 20px 30px;
 }
 
 .opacity__title {
-	font-size: rem(14);
-	line-height: rem(16);
-	margin-bottom: 30px;
+	margin-bottom: 28px;
+	padding-left: 0;
 }
 
 .ui-slider-horizontal {
@@ -17,26 +16,26 @@
 
 .ui-slider-range {
 	height: 3px;
-	background: $gray;
+	background: $grey;
 	border-radius: 2px
 }
 
 .ui-slider-handle {
 	display: block;
-	width: 24px;
-	height: 24px;
+	width: 22px;
+	height: 22px;
 	border-radius: 50%;
 	position: relative;
 	background :#dbe1e8;
 	margin-top: -12px;
 	margin-left: -12px;
-	box-shadow: 0 1px 3px 0 $gray;
+	box-shadow: 0 1px 3px 0 $grey;
 	outline: none;
 	top: -2px;
 
 	&:after {
 		display: block;
-		background: $gray;
+		background: $grey;
 		border-radius: 50%;
 		position: absolute;
 		content: '';

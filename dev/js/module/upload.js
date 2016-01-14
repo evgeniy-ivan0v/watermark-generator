@@ -22,11 +22,9 @@ var uploadModule = (function () {
     function _isDisabled() {
 
     	if (!(imgFlag||wmFlag)) {
-    		console.log ('no img');
     		$('.upload__file-upload_watermark').attr('disabled', true);
     		$('.upload__label_watermark').addClass('disabled');
     	} else {
-    		console.log ('yes img');
     		$('.upload__file-upload_watermark').attr('disabled', false);
     		$('.upload__label_watermark').removeClass('disabled');
     	}
@@ -48,24 +46,30 @@ var uploadModule = (function () {
     							.closest('label')
     							.find('.upload__input-text');
 
-
+ 							
     	img.file = file;
 
+    	// if (!file.type.match('image.*')) {
+    	// 	fileNameField.text('Выберите изображение');
+    	// 	$(this)
+    	// 		.closest('label')
+    	// 		.find('.upload__fake-input')
+    	// 		.addClass('error');
+    	// } else {
+    		if (!!file) {
+				reader.readAsDataURL(file);
 
-    	if (!!file) {
-			reader.readAsDataURL(file);
-
-	    	reader.onload = function(e) {
-    			img.src = e
-    						.target
-    						.result;
+		    	reader.onload = function(e) {
+	    			img.src = e
+	    						.target
+	    						.result;
 		    };
 
-			$('.generator__canvas')
+			$('.generator__image-holder')
 								.find('.' + imgClass)
 								.remove();
 			$(img)
-				.appendTo('.generator__canvas')
+				.appendTo('.generator__image-holder')
 				.addClass(imgClass);
 
 			fileNameField.text(img.file.name);
@@ -78,21 +82,26 @@ var uploadModule = (function () {
 			_isDisabled();
 
 
-    	} else {
-    		$('.generator__canvas').find('.' + imgClass).remove();
-    		
-    		if (imgClass == 'generator__main-image') {
-			 	imgFlag = false;
-			 } else {
-			 	wmFlag =false;
-			 };
+	    	} else {
+	    		$('.generator__image-holder')
+	    								.find('.' + imgClass)
+	    								.remove();
+	    		
+	    		if (imgClass == 'generator__main-image') {
+					imgFlag = false;
+				} else {
+					wmFlag =false;
+				};
 
 
-			 
-			 fileNameField.text('');
-    		_placeholder();
-    		_isDisabled();
-    	}
+				 
+				fileNameField.text('');
+	    		_placeholder();
+	    		_isDisabled();
+	    	}
+    	// }
+
+    	
     	
     };
 
@@ -111,32 +120,6 @@ var uploadModule = (function () {
  				};
  			});
  	};
-
-
- // 	function _showFileName(name) {
-
- 		
-
-	//  	var $this = $(this),
-	//  		lbl = $this.closest('label'),
-	//  		fileName = lbl.find('.upload__input-text');
-	
-
-
-	// 	lbl
-	// 		.closest('form')
-	// 		.find('input:disabled')
-	// 		.attr('disabled', false);
-
-	// 	lbl
-	// 		.closest('form')
-	// 		.find('.disabled')
-	// 		.removeClass('disabled');
-
-	// 	$(fileName).text(name);
-
-	// };
-
 	
 
   return {
