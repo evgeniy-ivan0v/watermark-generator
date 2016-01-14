@@ -21,7 +21,7 @@ var tile = (function() {
 					'margin-right': my,
 					'margin-bottom': mx,
 					'width': watermark.width(),
-					'height':watermark.height()
+					'height': watermark.height()
 			});
 			currentClone.appendTo(wrapper);
 		}

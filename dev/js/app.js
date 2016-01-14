@@ -4,6 +4,7 @@ var devPanel = require('./module/dePanel.js');
 var position = require('./module/position.js');
 var opacity = require('./module/opacity.js');
 var uploadModule = require('./module/upload.js');
+var lang = require('./module/lang.js');
 
 
 $(document).ready(function() {
@@ -11,5 +12,6 @@ $(document).ready(function() {
 	position.init();
 	opacity();
 	uploadModule();
+	lang();
 });
 

@@ -17,15 +17,33 @@ var drag = (function() {
 		});
 	};
 	var tile = function() {
-		var wrapper = $('.marks-tile__wrapper');
+		var wrapper = $('.marks-tile__wrapper'),
+			holder = $('.generator__image-holder'),
+			xHolder = holder.offset().left,
+			yHolder = holder.offset().top,
+			wHolder = holder.width(),
+			hHolder = holder.height(),
+			wWrapper = wrapper.width(),
+			hWrapper = wrapper.height(),
+			xtop, ytop, xbot, ybot;
+
+		xbot = xHolder + (wWrapper - wHolder);
+		ybot = yHolder + (hWrapper - hHolder);
+		xtop = xHolder - (wWrapper - wHolder);
+		ytop = yHolder - (hWrapper - hHolder);
+		console.log(wrapper);
+
 		wrapper.draggable({
-			cursor: 'pointer'
+			cursor: 'pointer',
+			containment: [xtop, ytop, xbot, ybot]
 		});
 	}
+	
 	return {
 		single: single,
 		tile: tile
-	}
+		}
+	
 })();
 
 module.exports = drag
