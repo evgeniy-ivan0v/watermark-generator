@@ -2,28 +2,46 @@ var $ = require('jquery');
 require('jquery-ui/slider');
 
 var opacity = (function () {
+  var $elem = $( ".opacity__slider" ),
+      $watermark = $('.generator__watermark-image'),
+      option = {
+        range: "min",
+        value: 50,
+        min: 0,
+        max: 100,
+        disabled: true,
+        slide: false
+      };
 
-    function _setUpListener() {
-        
-        $( ".opacity__slider" ).slider({
-            range: "min",
-            value: 50,
-            min: 0,
-            max: 100,
-            slide: function( event, ui ) {
-                var value = ($( ".opacity__slider" ).slider( "value"))/100;
-                $('.generator__watermark-image').css('opacity', value);
-            }
-        }); 
-    };
+  var setOpasity = function (event, ui) {
+          if(!$watermark.is('.generator__watermark-image')){
+              $watermark = $('.generator__watermark-image');
+          };
+          value = ($elem.slider("value"))/100;
+          $watermark.css('opacity', value);
+      };
 
-  function init () {
-    _setUpListener();
+  var init = function () {
+      $elem.slider(option)
   };
 
+  var enable = function () {
+      option.disabled = false;
+      option.slide = setOpasity;
+      setDefault(); 
+  };
+  var setDefault = function () {
+      if(!$watermark.is('.generator__watermark-image')){
+          $watermark = $('.generator__watermark-image');
+      };
+      $watermark.css('opacity', (option.value/100));
+      $elem.slider(option);
+  };
   return {
-    init: init
+    init: init,
+    enable: enable,
+    setDefault: setDefault
   };
 })();
 
-module.exports = opacity.init
+module.exports = opacity

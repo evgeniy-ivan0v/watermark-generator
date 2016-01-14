@@ -62,7 +62,7 @@
 		left: 0px;
 		z-index: 5;
 	}
-}
+} 
 
 .position-wrapper {
 	padding-left: rem(17);
@@ -155,12 +155,12 @@
 		border-top: none;
 	}
 }
-//unselect mode styles
-.position-wrapper.unselect {
-	& .coords__arrow:hover {
-		border-color: $grey;
-	}
-}
+// //unselect mode styles
+// .position-wrapper.unselect {
+// 	& .coords__arrow:hover {
+// 		border-color: $grey;
+// 	}
+// }
 //single mode styles
 .position-wrapper.single {
 	& .position__item {
@@ -263,4 +263,15 @@
 			}
 		}
 	}
+}
+
+// стили для неактивных элементов
+.disabled {
+	.switch__item {
+		&:hover { border-color: $grey; }
+		&:hover:after {	background-color: $grey; }
+		&.active:hover { border-color: $coral; }
+		&.active:hover:after { background-color: $coral; }
+	}
+	.coords__arrow:hover { border-color: $grey; }
 }

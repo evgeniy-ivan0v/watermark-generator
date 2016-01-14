@@ -82,17 +82,6 @@ gulp.task('jade', function () {
   .pipe(gulp.dest(paths.jade.destination))
 });
 
-//слежка за файлами и перезагрузка сервера
-gulp.task('watch', function () {
-  gulp.watch(paths.jade.location, ['jade']);
-  gulp.watch(paths.scss.location, ['compass']);
-  gulp.watch(paths.js.locationDev, ['js']);
-  gulp.watch([
-    paths.html.location,
-    paths.css.location,
-    paths.js.location
-  ]).on('change', browserSync.reload);
-});
 
 //запуск сервера
 gulp.task('server', function () {
@@ -102,6 +91,19 @@ gulp.task('server', function () {
       baseDir: paths.browserSync.baseDir
     }
   });
+  /*gulp.watch(paths.html.location).on('change', browserSync.reload);
+  gulp.watch(paths.css.location).on('change', browserSync.reload);
+  gulp.watch(paths.js.location).on('change', browserSync.reload);*/
+  gulp.watch("dist/*.html").on('change', browserSync.reload);
+  gulp.watch("dist/js/**/*.js").on('change', browserSync.reload);
+  gulp.watch("dist/css/**/*.css").on('change', browserSync.reload);
+});
+
+//слежка за файлами и перезагрузка сервера
+gulp.task('watch', function () {
+  gulp.watch(paths.scss.location, ['compass']);
+  gulp.watch(paths.jade.location, ['jade']);
+  gulp.watch(paths.js.locationDev, ['js']);
 });
 
 //компиляция scss
