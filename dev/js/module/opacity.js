@@ -1,5 +1,5 @@
 var $ = require('jquery');
-require('jquery-ui');
+require('jquery-ui/slider');
 
 var opacity = (function () {
 
