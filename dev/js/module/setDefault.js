@@ -1,91 +1,42 @@
 var $ = require('jquery');
+var common = require('./common.js');
+var opt = require('./options.js');
+var position = require('./position.js');
+var drag = require('./drag.js');
 
 var setDefault = (function() {
-	var xmin = 0,
-		ymin = 0,
-		mainImg = $('.generator__main-image'),
-		watermark = $('.generator__watermark-image'),
-		xmax = mainImg.width() - watermark.width(),
-		ymax = mainImg.height() - watermark.height(),
-		defPos = 'top-left',
-		mode = 'single',
-		container = $('.generator__image-holder');
-		//Задаем дефолтные координаты в зависимости от выбранного начального положения
-		function diffPos(pos) {
-			var xstart, ystart;
-			switch (pos) {
-			case 'top-left':
-				xstart = 0;
-				ystart = 0;
-				break;
-			case 'top-center':
-				xstart = (mainImg.width() - watermark.width())/2;
-				ystart = 0;
-				break;
-			case 'top-right':
-				xstart = mainImg.width() - watermark.width();
-				ystart = 0;
-				break;
-			case 'middle-left':
-				xstart = 0;
-				ystart = (mainImg.height() - watermark.height())/2;
-				break;
-			case 'middle-center':
-				xstart = (mainImg.width() - watermark.width())/2;
-				ystart = (mainImg.height() - watermark.height())/2;
-				break;
-			case 'middle-right':
-				xstart = mainImg.width() - watermark.width();
-				ystart = (mainImg.height() - watermark.height())/2;
-				break;
-			case 'bottom-left':
-				xstart = 0;
-				ystart = mainImg.height() - watermark.height();
-				break;
-			case 'bottom-center':
-				xstart = (mainImg.width() - watermark.width())/2;
-				ystart = mainImg.height() - watermark.height();
-				break;
-			case 'bottom-right':
-				xstart = mainImg.width() - watermark.width();
-				ystart = mainImg.height() - watermark.height();
-				break;
-			default:
-				xstart = 0;
-				ystart = 0;
-			}
-			return {
-				xPos: xstart,
-				yPos: ystart
-			}
-
-		}
-		
+			
 	var init = function() {
-		//Задаем размеры контейнера в зависимости от ширины и высоты основного фото
-			container.css({
-				'width': mainImg.width(),
-				'height': mainImg.height(),
-				'margin': 'auto',
-				'position': 'relative'
+			//Задаем размеры контейнера в зависимости от ширины и высоты основного фото
+			common.container.css({
+				'width': common.mainImg.width(),
+				'height': common.mainImg.height()
 			});
-		//Помещаем вотермарк в дефолтные координаты
-			watermark.css({
-					'top': diffPos(defPos).yPos,
-					'left': diffPos(defPos).xPos,
+			//Помещаем вотермарк в дефолтные координаты
+			common.defmark().css({
+					'top': common.grid(opt.defPos).yPos,
+					'left': common.grid(opt.defPos).xPos,
 					'margin': 0
-				});
-		};	
+			});
+			//Убираем unselect классы, добавляем класс режима, 
+			//добавляем активный класс нужному квадрату сетки
+			common.posBlock.removeClass('unselect').addClass(opt.defMode);
+			common.switches.removeClass('unselect-list');
+			common.inputs.attr('disabled', false);
+			common.changeIn();
+			common.classBox(opt.defPos);
+
+			drag.single();
+		};
+
+	var resetPos = function(event) {
+		event.preventDefault();
+		$('.switch__item.single').click();
+	}	
 
 	return {
-		xmin: xmin,
-		ymin: ymin,
-		xmax: xmax,
-		ymax: ymax,
-		defPos: defPos,
-		mode: mode,
 		init: init,
-		diffPos: diffPos
+		resetPos: resetPos
 	}
 })();
 
