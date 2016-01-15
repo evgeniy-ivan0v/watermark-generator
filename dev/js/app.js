@@ -5,6 +5,7 @@ var position = require('./module/position.js');
 var opacity = require('./module/opacity.js');
 var uploadModule = require('./module/upload.js');
 var dragndrop = require('./module/dragndrop.js');
+var widgets = require('./module/widgets.js');
 
 
 $(document).ready(function() {
@@ -13,5 +14,6 @@ $(document).ready(function() {
 	opacity();
 	uploadModule();
 	dragndrop();
+	widgets();
 });
 
