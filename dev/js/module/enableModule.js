@@ -10,7 +10,7 @@ var enableModule = (function () {
     var enableAll = function () {
     	disabledElems.attr('disabled', false).removeClass('disabled');
     	opacity.enable();
-        //position.init();
+        //console.log('ddfdfd')
     };
 
    var enableWatermark = function () {
