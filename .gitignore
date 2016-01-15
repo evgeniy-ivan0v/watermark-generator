@@ -1,5 +1,6 @@
 node_modules
 .sass-cache
 dist
-dev/bower
+/dev/bower
+dev/backend/vendor
 /**/Thumbs.db
