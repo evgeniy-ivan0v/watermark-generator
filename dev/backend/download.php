@@ -1,100 +1,96 @@
-<?php 
-	require 'vendor/autoload.php';	
-	use PHPImageWorkshop\ImageWorkshop;
+<?php
+	namespace abeautifulsite;
+	use Exception;
 
-	$path='../images/upload/';
-	$result_name='result.jpg';
-	$result_file=$path.$result_name;
-	$ctype="image/jpg";
-	$quality=85;
-	
-	$bg_image = $path.$_POST['bg-img-path'];		//получение картинки
-	$wm_image = $path.$_POST['wm-img-path'];
+	require 'SimpleImage.php';
+	$uploaddir = 'file/';
+	$uploadfile = $uploaddir.basename($_FILES['main']['name']);
 
-	//Получение реального размера картинки
-	$bg_size = getimagesize($bg_image);
-	$bg_width = $bg_size[0];					//истинные размеры фона
-	$bg_height = $bg_size[1];
+	$originX = $_POST['originX'];
+    $originY = $_POST['originY'];
+    $opacity = $_POST['opacity'];
 
-	//echo 'размеры фоновой: '.$bg_width.'x'.$bg_height.'<br><br>';
+    $mode = $_POST['mode'];
 
-	$bg_width_scale = $_POST['bg-width'];		//отмасштабированные размеры
-	$bg_height_scale = $_POST['bg-height'];
 
-	$k_x = $bg_width / $bg_width_scale; // Считаем коэффициент сдвига
-	$k_y = $bg_height / $bg_height_scale; // Считаем коэффициент сдвига
 
-	//Получение реального размера ватермарки
-	$wm_size = getimagesize($wm_image);
-	$wm_width = $wm_size[0];					//истинные размеры фона
-	$wm_height = $wm_size[1];	
 
-	// Получение координат ватермарки
-	$coordinates_array = $_POST['coordinates'];
-	$coordinates_array = explode(',', $coordinates_array);
-	$wm_position="LT";     //стартовый угол для отсчета координат
+	// print_r (getimagesize($_FILES['main']['name']));
 
-	//создание слоя
-	$bg_layer = ImageWorkshop::initFromPath($bg_image);		
-	$wm_layer = ImageWorkshop::initFromPath($wm_image);
 
-	// Прозрачность для водяного знака
-	$wm_opacity=$_POST['transparency']*100; //в процентах
-	$wm_layer->opacity($wm_opacity);
+	$watermarkfile = $uploaddir.basename($_FILES['watermark']['name']);
 
-	$max_wm=0; //количество ватермарок попавших на фон
+	if (copy($_FILES['main']['tmp_name'], $uploadfile) && copy($_FILES['watermark']['tmp_name'], $watermarkfile)) {	
+		$imageSize = getimagesize($uploadfile);
+		$watermarkSize = getimagesize($watermarkfile);
+		$imagewidth = $imageSize[0];
+		$imageheight = $imageSize[1];
+		$wtwidth = $watermarkSize[0];
+		$wtheight = $watermarkSize[1];
+		// echo "<h3> Главное изображение " . (string)$imagewidth . "x" . (string)$imageheight . "</h3>";
 
-	//Цикл перебора всех ватермарок для наложения на фон
-	$length = count($coordinates_array);
-	for ($i=0; $i < $length; $i=$i+2) {
-		$wm_positionX=$coordinates_array[$i];
-		$wm_positionY=$coordinates_array[$i+1];
+		if ($mode == "single") {
+    		$img = new SimpleImage($uploadfile);
+			$img->overlay($watermarkfile, 'top left', $opacity, $originX, $originY);
+			$img->save('./file/new-image.jpg');
 
-		$wm_positionX_real = $k_x * $wm_positionX;
-		$wm_positionY_real = $k_y * $wm_positionY;
+    	} else if ($mode == "till") {
+			$pozX = -100;
+			$pozY = -100;
+			$marX = 50;
+			$marY = 30;
+			$widMain = 1500;
+			$heigMain = 1500;
+			$widWat = 256;
+			$heigWat = 256;
+    		$img = new SimpleImage($uploadfile);
+    		$newPozX = $pozX;
+
+
+    		while ($newPozX < $widMain) {
+    			$newPozY = $pozY;
+    			// echo $newPozX . " - X <br>";
+
+    			while ($newPozY < $heigMain) {
+    				$img->overlay($watermarkfile, 'top left', $opacity, $newPozX, $newPozY);
+    				$newPozY += $heigWat + $marY;
+    				// echo $newPozY . " - Y <br>";
+    			}
+    			$newPozX += $widWat + $marX;
+    		}
+
+    		$img->save('./file/new-image.jpg');
+    	}
+
 		
-		//отбор ватермарок, координаты которых попадают на фоновое изображение
-		//так же отбор по количеству попавших ватермарок, из-за нагрузки на сервер
-		if ( $max_wm<110 && ($wm_positionX_real>-$wm_width && $wm_positionY_real>-$wm_height) && ($wm_positionX_real<$bg_width && $wm_positionY_real<$bg_height)) {
 
+		//отдаем файл на скачивание
 
-			//echo 'отобраные координаты ватермарок: <br>'.$wm_positionX_real.'xx'.$wm_positionY_real.'<br>';
+		$result = $uploaddir . 'new-image.jpg';
 
-			/**
-			 * Наложение слоя $wm_layer поверх слоя $bg_layer
-			 * @param ImageWorkshop $layer - накладываемый слой
-			 * @param integer $positionX   - координата по оси X
-			 * @param integer $positionY   - координата по оси Y
-			 * @param string $position     - начальная тока отсчета координат (LT, MT, RT, LM, MM и т.д.)
-			 * $mainLayer->addLayerOnTop($layer, $positionX, $positionY, $position);
-			 */
-			$bg_layer->addLayerOnTop($wm_layer, $wm_positionX_real, $wm_positionY_real, $wm_position);
-
-			$max_wm++;
-		} 
+		if (file_exists($result)) {
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename='. 'new-image.jpg');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate');
+			header('Pragma: public');
+			header('Content-Length: '.filesize($result));
+			
+			if ($fd = fopen($result, 'rb')) {
+				while (!feof($fd)) {
+				print fread($fd, 1024);
+				}
+			fclose($fd);
+    		}
+    		exit;
+		}
+		// echo "<img src=" . $result . ">";
+	}
+	
+	else { 
+		echo "<h3>Ошибка! Не удалось загрузить файл на сервер!</h3>"; 
+		exit; 
 	}
 
-	//echo 'количество ватермарок: '.$k.'<br>';
-	// Сохранение готового изображения (если требуется)
-	$bg_layer->save($path, $result_name, true, null, $quality);
-
-	// Если требуется показать созданное изображение в браузере
-/*	$image = $bg_layer->getResult();
-	header('Content-type: image/jpeg');
-	header('Content-Disposition: filename="result.jpg"');
-	imagejpeg($image, null, $quality);
-	exit;*/
-
-	//отдаем файл на скачивание
-	header('Content-Description: File Transfer');
-	header('Content-Type: application/octet-stream');
-	header('Content-Disposition: attachment; filename=' . basename($result_file));
-	header('Content-Transfer-Encoding: binary');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate');
-	header('Pragma: public');
-	header('Content-Length: ' . filesize($result_file));
-	readfile($result_file);
-	exit;
  ?>
-<!-- <img src="<?php echo $result_file ?>" alt=""> -->
