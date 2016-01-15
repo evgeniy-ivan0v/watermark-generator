@@ -2,6 +2,7 @@ var $ = require('jquery');
 var setError = require('./setError.js');
 var setSizeHolder = require('./setSizeHolder.js');
 var enableModule = require('./enableModule.js');
+var position = require('./position/position.js');
 
 var uploadModule = (function () {
     var $imageHolder = $('.generator__image-holder')
@@ -76,6 +77,7 @@ var uploadModule = (function () {
                 //console.log(enableModule)
             } else {
                 enableModule.all();
+                position.init();
             }
         });
     };

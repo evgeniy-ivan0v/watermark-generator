@@ -15,7 +15,7 @@ var app = (function () {
 	var module = {
 		upload: upload,
 		slider: opacity,
-		lang: lang
+		lang: lang,
 	};
 	var init = function () {
 		module.slider.init();

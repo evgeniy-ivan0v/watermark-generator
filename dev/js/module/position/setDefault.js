@@ -3,35 +3,37 @@ var common = require('./common.js');
 var opt = require('./options.js');
 var position = require('./position.js');
 var drag = require('./drag.js');
+var tile = require('./tile.js');
 
 var setDefault = (function() {
 			
 	var init = function() {
-			//Задаем размеры контейнера в зависимости от ширины и высоты основного фото
-			common.container.css({
-				'width': common.mainImg.width(),
-				'height': common.mainImg.height()
-			});
+			
 			//Помещаем вотермарк в дефолтные координаты
 			common.defmark().css({
 					'top': common.grid(opt.defPos).yPos,
 					'left': common.grid(opt.defPos).xPos,
 					'margin': 0
 			});
-			//Убираем unselect классы, добавляем класс режима, 
+			//добавляем класс режима, 
 			//добавляем активный класс нужному квадрату сетки
-			common.posBlock.removeClass('unselect').addClass(opt.defMode);
-			common.switches.removeClass('unselect-list');
-			common.inputs.attr('disabled', false);
+			common.posBlock.addClass(opt.defMode);
 			common.changeIn();
 			common.classBox(opt.defPos);
 
 			drag.single();
+
+			//Записываем текущие координаты вотермарка
+			opt.curX = common.grid(opt.defPos).xPos;
+			opt.curY = common.grid(opt.defPos).yPos;
 		};
 
 	var resetPos = function(event) {
 		event.preventDefault();
-		$('.switch__item.single').click();
+		$('.single').click();
+		common.move(common.grid(opt.defPos).xPos, common.grid(opt.defPos).yPos);
+		common.classBox(opt.defPos);
+		
 	}	
 
 	return {

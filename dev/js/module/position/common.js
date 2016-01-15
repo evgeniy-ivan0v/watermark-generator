@@ -3,7 +3,7 @@ var $ = require('jquery'),
 	opt = require('./options.js');
 
 var common = (function() {
-	var mainImg = $('.generator__main-image'),
+	var mainImg = $('.generator__image-holder'),
 		inputs = $('.coords__input'),
 		xInput = $('#x-pos'),
 		yInput = $('#y-pos'),
@@ -63,6 +63,7 @@ var common = (function() {
 			'left': newX
 		}, opt.duration, function() {
 			changeInput();
+			curOptions();
 		});
 	}
 
@@ -127,6 +128,11 @@ var common = (function() {
 		});
 	}
 
+	//Записываем текущие координаты одиночного вотермарка
+	function curOptions() {
+		opt.curX = defineCoords(defineWatermark()).x;
+		opt.curY = defineCoords(defineWatermark()).y;
+	}
 	
 	return {
 		defmark: defineWatermark,
@@ -144,7 +150,8 @@ var common = (function() {
 		yInput: yInput,
 		switches: switches,
 		container: container,
-		posItems: posItems
+		posItems: posItems,
+		curopt: curOptions
 	}
 })();
 

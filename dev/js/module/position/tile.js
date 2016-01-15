@@ -21,7 +21,9 @@ var tile = (function() {
 					'margin-right': my,
 					'margin-bottom': mx,
 					'width': watermark.width(),
-					'height': watermark.height()
+					'height': watermark.height(),
+					'top': 0,
+					'left': 0
 			});
 			currentClone.appendTo(wrapper);
 		}
@@ -44,8 +46,8 @@ var tile = (function() {
 		watermarks.remove();
 		wrapper.remove();
 		oneWatermark.css({
-			'top': 0, 
-			'left': 0, 
+			'top': opt.curY, 
+			'left': opt.curX, 
 			'position': 'absolute', 
 			'margin': 0
 		});
@@ -94,6 +96,7 @@ var tile = (function() {
 					  'height': countMarks().qtyCol*(watermark.height() + mx)
 					});
 	};
+
 
 	return {
 		tiling: tiling,
