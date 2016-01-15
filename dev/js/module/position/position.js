@@ -22,9 +22,6 @@ var position = (function() {
 		$('.position__item').on('click', _blockMove);
 		$('.coords__arrow').on('click', _spinner);
 		common.inputs.on('keyup', _writePos);
-		//TODO перенести обработчик reset в отдельный модуль
-		// и подключить функцию setDefault.resetPos
-		$('.button__reset').on('click', setDefault.resetPos);
 		$('.button__submit').on('click', getVars);
 	};
 

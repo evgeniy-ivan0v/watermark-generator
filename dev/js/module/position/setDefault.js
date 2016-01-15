@@ -29,7 +29,6 @@ var setDefault = (function() {
 		};
 
 	var resetPos = function(event) {
-		event.preventDefault();
 		$('.single').click();
 		common.move(common.grid(opt.defPos).xPos, common.grid(opt.defPos).yPos);
 		common.classBox(opt.defPos);

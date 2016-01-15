@@ -1,11 +1,13 @@
 var $ = require('jquery');
 
-var opacity = require('./opacity.js')
+var opacity = require('./opacity.js'),
+	setDefault = require('./position/setDefault.js');
 
 var reset = (function () {
 	var $elem = $(".button__reset");
 	var module = {
-		opacity: opacity
+		opacity: opacity,
+		position: setDefault
 	};
 
 	var _setListener = function () {
@@ -17,6 +19,7 @@ var reset = (function () {
 
 	var reset = function () {
 		module.opacity.setDefault();
+		module.position.resetPos();
 	};
 
 	var init = function () {
