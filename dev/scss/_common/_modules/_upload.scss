@@ -1,31 +1,39 @@
-$gray: #9eb2c0;
-$red: #f97e76;
+
 
 .upload {
-	padding: 10px 20px;
+	padding: 0 20px 10px;
 }
 
 .upload__title {
-	margin-bottom: 10px;
-	color: $setting-titles-color;
-	font-size: rem(14);
+	margin-bottom: 7px;
+	padding-left: 0;
 }
 
 .upload__fake-input {
 	position: relative;
-	height: 28px;
-	border: 1px solid $gray;
+	height: 27px;
+	border: 1px solid $grey;
 	border-radius: 5px;
 	box-sizing: border-box;
-	margin-bottom: 25px;
+	margin-bottom: 22px;
+
+	&.error {
+		border-color: $coral;
+		box-shadow: inset 0 0 5px 0 $coral;
+
+		.upload__input-text {
+			color: $coral;
+		}
+	}
 	
 }
 
 .upload__input-text {
-	line-height: 25px;
-	padding-left: 5px;
-	font-size: rem(12);
-	color: $gray;
+	line-height: rem(12);
+	padding: 5px;
+	font-family: "roboto-light-webfont", sans-serif;
+	font-size: rem(10);
+	color: $grey;
 	width: 178px;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -35,9 +43,9 @@ $red: #f97e76;
 	position: absolute;
 	top: -1px;
 	right: -1px;
-	height: 28px;
+	height: 27px;
 	width: 40px;
-	background: $red;
+	background: $coral;
 	border-bottom-right-radius: 5px; 
 	border-top-right-radius: 5px;
 	cursor: pointer;
@@ -45,23 +53,23 @@ $red: #f97e76;
 }
 
 .upload__file-upload {
-	// display: none;
+	display: none;
 }
 
 .upload__label.disabled {
 
 	.upload__title {
-		color: disabled($gray);
+		color: disabled($grey);
 	}
 
 	.upload__fake-input {
-		border-color: disabled($gray);
-		color: disabled($gray);
+		border-color: disabled($grey);
+		color: disabled($grey);
 	}
 
 	.upload__btn {
 		cursor: auto;
-		background-color: disabled($red);
+		background-color: disabled($coral);
 	}
 
 }

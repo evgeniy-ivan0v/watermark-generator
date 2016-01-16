@@ -1,16 +1,23 @@
+var setSizeHolder = require('./setSizeHolder.js');
+
 var devPanel = (function () {
 	var elem = document.querySelector('.dev-panel'),
-		imageArea = document.querySelector('.generator__canvas');
+		imageArea = document.querySelector('.generator__image-holder');
 
 	var addImage = function (elem) {
 		var src = getSelectValue(elem),
 			imageClass = getImageClass(elem),
 			image = imageArea.querySelector('.' + imageClass) || false;
-			console.log(image)
 		if(image) {
 			image.setAttribute('src', src);
+			if(imageClass === "generator__main-image"){
+				setSizeHolder();
+			}
 		} else {
 			crateImg(src, imageClass);
+			if(imageClass === "generator__main-image"){
+				setSizeHolder();
+			}
 		};
 	};
 
@@ -18,7 +25,7 @@ var devPanel = (function () {
 		var img = document.createElement('img');
 		img.src = src;
 		img.classList.add(cls);
-		imageArea.appendChild(img);
+		imageArea.appendChild(img);		
 	};
 
 	var getSelectValue = function (elem) {

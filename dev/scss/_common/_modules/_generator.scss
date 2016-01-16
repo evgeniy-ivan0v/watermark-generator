@@ -6,7 +6,6 @@
 	background-color: #676261;
 }
 
-
 .generator__title{
 	font-size: rem(30);
 	font-family: "SegoeUILight", sans-serif;
@@ -25,17 +24,29 @@
     background-size: 16px 16px;
     background-position: 0 0, 8px 8px;
     position: relative;
+    &_preload {
+    	.preloader {
+    		display: block;
+    	}
+    	.generator__image-holder {
+    		visibility: hidden;
+    	}
+    }
 }
-
+.generator__image-holder {
+	@include absolute-center;
+}
 .generator__main-image{
 	max-height: 100%;
 	max-width: 100%;
-	@include absolute-center;
 }
 .generator__watermark-image {
-	@include absolute-center;
+	position: absolute;
+	left: 0;
+	top: 0;
 	z-index: 10;
 	max-height: 100%;
 	max-width: 100%;
+	opacity: 0.75;
 }
 
