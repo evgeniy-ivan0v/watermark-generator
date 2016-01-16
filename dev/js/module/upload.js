@@ -2,18 +2,32 @@ var $ = require('jquery');
 var setError = require('./setError.js');
 var setSizeHolder = require('./setSizeHolder.js');
 var enableModule = require('./enableModule.js');
-var position = require('./position/position.js');
+
 
 var uploadModule = (function () {
-    var $imageHolder = $('.generator__image-holder')
-    var option = {
-        errorText: {
-            size: "Файл превышает допустимый размер",
-            type: "Не допустимый тип файла"
+    var $imageHolder = $('.generator__image-holder'),
+        option = {
+            errorText: {
+                size: "Файл превышает допустимый размер",
+                type: "Не допустимый тип файла"
+            },
+            validType: ['image/png', 'image/jpeg'],
+            maxSize: 2e+6
         },
-        validType: ['image/png', 'image/jpeg'],
-        maxSize: 2e+6
-    }
+        imgSize = {
+            main : {
+                naturalWidth: 0,
+                naturalHeight: 0,
+                newWidth: 0,
+                newHeight: 0
+            },
+            water: {
+                width: 0,
+                height: 0
+            }
+        }
+
+
 
 	var init = function () {
     	_setUpListener();
@@ -57,6 +71,23 @@ var uploadModule = (function () {
         return img;
     };
 
+    function setSizeWatermark () {
+        var natWidth = imgSize.main.naturalWidth,
+            natHeight = imgSize.main.naturalHeight,
+            newWidth = imgSize.main.newWidth,
+            newHeight = imgSize.main.newHeight,
+            watWidth = imgSize.water.width,
+            watHeight = imgSize.water.height,
+            watNewWidth = watWidth / (natWidth / newWidth),
+            watNewHeight = watHeight / (natHeight / newHeight);
+            //console.log('Натуральная ширика изображения - '+natWidth+'\nНатуральная высота изображения - '+natHeight+'\nНовая ширина изображения - '+newWidth+'\nНовая высота изображения - '+newHeight+'\nОригинальная ширина ватермарка - '+watWidth+'\nОригинальняя высота ватермарка - '+watHeight+'\nНовая ширина ватермарка - '+watNewWidth+'\nНовая высота ватермарка - '+watNewHeight)
+        if($('img').is('.generator__watermark-image')){
+            $('.generator__watermark-image')
+                .width(watNewWidth)
+                .height(watNewHeight);
+        };
+    };
+
     function addImage (file, className) {
         var image = createImage(file, className),
             selector = '.' + className,
@@ -74,10 +105,16 @@ var uploadModule = (function () {
             if(className === 'generator__main-image') {
                 setSizeHolder(self);
                 enableModule.watermark();
+                imgSize.main.naturalWidth = this.naturalWidth;
+                imgSize.main.naturalHeight = this.naturalHeight;
+                imgSize.main.newWidth = this.width;
+                imgSize.main.newHeight = this.height;                
             } else {
                 enableModule.all();
-                position.init();
+                imgSize.water.width = this.naturalWidth;
+                imgSize.water.height = this.naturalHeight;
             }
+            setSizeWatermark();
         });
     };
   

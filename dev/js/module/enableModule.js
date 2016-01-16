@@ -1,6 +1,6 @@
 var $ = require('jquery');
 var opacity = require('./opacity.js');
-//var position = require('./position.js');
+var position = require('./position/position.js');
 
 var enableModule = (function () {
     var $form = $('.settings__form-holder'),
@@ -10,7 +10,7 @@ var enableModule = (function () {
     var enableAll = function () {
     	disabledElems.attr('disabled', false).removeClass('disabled');
     	opacity.enable();
-        //console.log('ddfdfd')
+        position.init();
     };
 
    var enableWatermark = function () {
