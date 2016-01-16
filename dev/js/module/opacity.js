@@ -1,6 +1,5 @@
-
-<<<<<<< HEAD
-=======
+var $ = require('jquery');
+require('jquery-ui/slider')
 var opacity = (function () {
 
     function _setUpListener() {
@@ -30,4 +29,3 @@ var opacity = (function () {
 })();
 
 module.exports = opacity.init
->>>>>>> d38f5e65e7c0a1df4842b5eb440c6ebd722818b4
