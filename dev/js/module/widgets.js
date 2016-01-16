@@ -1,12 +1,9 @@
 var $ = require('jquery');
 
 var widgets = (function () {
-
-    function _setUpListener() {
-		var vk = document.getElementById('vk'),
-			tw = document.getElementById('twitter'),
-			fb = document.getElementById('facebook'),
-
+	var vk = document.getElementById('vk'),
+		tw = document.getElementById('twitter'),
+		fb = document.getElementById('facebook'),
 		Share = {
 			vkontakte: function(purl, ptitle, pimg, text) {
 				url  = 'http://vkontakte.ru/share.php?';
@@ -15,12 +12,6 @@ var widgets = (function () {
 				url += '&description=' + encodeURIComponent(text);
 				url += '&image='       + encodeURIComponent(pimg);
 				url += '&noparse=true';
-				Share.popup(url);
-			},
-			odnoklassniki: function(purl, text) {
-				url  = 'http://www.odnoklassniki.ru/dk?st.cmd=addShare&st.s=1';
-				url += '&st.comments=' + encodeURIComponent(text);
-				url += '&st._surl='    + encodeURIComponent(purl);
 				Share.popup(url);
 			},
 			facebook: function(purl, ptitle, pimg, text) {
@@ -38,30 +29,30 @@ var widgets = (function () {
 				url += '&counturl=' + encodeURIComponent(purl);
 				Share.popup(url);
 			},
-			mailru: function(purl, ptitle, pimg, text) {
-				url  = 'http://connect.mail.ru/share?';
-				url += 'url='          + encodeURIComponent(purl);
-				url += '&title='       + encodeURIComponent(ptitle);
-				url += '&description=' + encodeURIComponent(text);
-				url += '&imageurl='    + encodeURIComponent(pimg);
-				Share.popup(url)
-			},
 
 			popup: function(url) {
-				window.open(url,'','toolbar=0,status=0,width=626,height=436');
+				var left = (screen.width-626)/2,
+					top = (screen.height-436)/2;
+
+				window.open(url,'','toolbar=0,status=0,width=626,height=436,left='+ left +',top='+ top +'');
 			}
 		};
+    function _setUpListener() {
+		
 
-		vk.addEventListener('click', function(){
+		vk.addEventListener('click', function(e){
+			e.preventDefault();
 			Share.vkontakte('URL','Генератор водяных знаков','IMG_PATH','Самое лучшее описание, которое вообще можно придумать');
 		});		
 
 
-		fb.addEventListener('click', function(){
+		fb.addEventListener('click', function(e){
+			e.preventDefault();
 			Share.facebook('URL','Генератор водяных знаков','IMG_PATH','Самое лучшее описание, которое вообще можно придумать');
 		});
 
-		tw.addEventListener('click', function(){
+		tw.addEventListener('click', function(e){
+			e.preventDefault();
 			Share.twitter('URL','Генератор водяных знаков');
 		});		
     };

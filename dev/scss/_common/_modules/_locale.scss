@@ -1,9 +1,18 @@
+.locale{
+	margin-bottom: 18px;
+}
+
+.locale__item{
+	width: 43px;
+}
+
 .locale__link{
 	text-transform: uppercase;
 	display: block;
 	background-color: #d7d5d7;
 	color: #8e9298;
 	height: 35px;
+	text-align: center;
 	overflow: hidden;
 	&:first-child{
 		border-bottom: 1px solid #a5a7ac;
