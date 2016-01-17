@@ -101,8 +101,9 @@ var uploadModule = (function () {
         var image = createImage(file, className),
             selector = '.' + className,
             oldImg = $imageHolder.find('img').is(selector);
-        
+        $('.preloader').fadeIn();
         $(image).on('load', function () {
+            $('.preloader').fadeOut();
             var self = $(this),
                 src = self.attr('src');
             if(oldImg) {

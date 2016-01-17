@@ -8,7 +8,7 @@ var drag = require('./drag.js');
 var position = (function() {
 	var mode = opt.mode,
 		switchItem = $('.switch__item'),
-		intervalId;
+		intervalID;
 
 	//Инициализируем модуль: устанавливаем прослушку событий и 
 	//ставим вотермарк в дефолтные настройки	
@@ -22,8 +22,8 @@ var position = (function() {
 		switchItem.on('click', _switchMode);
 		$('.position__item').on('click', _blockMove);
 		$('.coords__arrow').on('click', _spinner);
-		$('.coords__arrow').on('mousedown', _spinnerPush);
-		$('.coords__arrow').on('mouseup', _spinnerStop);
+		// $('.coords__arrow').on('mousedown', _spinnerPush);
+		// $('.coords__arrow').on('mouseup', _spinnerStop);
 		common.inputs.on('keyup', _writePos);
 	};
 
@@ -103,7 +103,7 @@ var position = (function() {
 	};
 
 	//Обрабатываем клики на стрелках инпутов
-	var _spinner = function() {
+	var _spinner = function(e) {
 		var arrow = $(this),
 			item = arrow.closest('.coords__item'),
 			input = item.find('.coords__input'),
