@@ -2,24 +2,6 @@ var $ = require('jquery');
 var upload = require('./upload.js');
 
 var download = (function() {
-
-	var testData = {
-
-		upload: {
-			image: File,
-			watermark: File
-		},
-		
-		position: {
-			mode: 'single',
-			posX: 50,
-			posY: 30,
-			marginX: 10,
-			marginY: 20
-		},
-		
-		opacity: .75
-	};
 	function getData () {
 		var fd = new FormData();
 		fd.append('mainImg', upload.getData().main);
@@ -57,17 +39,6 @@ var download = (function() {
 			   console.dir(data); // apple
 			}
 		})
-
-		// .done (function(answer) {
-		// 	console.log('yupiii');
-		// 	console.log(answer);
-		// })
-
-
-
-		// .fail (function(answer) {
-		// 	console.log('fail');
-		// });
 
 	}
 
