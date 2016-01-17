@@ -25,7 +25,7 @@ var position = (function() {
 		$('.coords__arrow').on('mousedown', _spinnerPush);
 		$('.coords__arrow').on('mouseup', _spinnerStop);
 		common.inputs.on('keyup', _writePos);
-		$('.button__submit').on('click', getVars);
+		//$('.button__submit').on('click', getVars);
 	};
 
 	//Переключаем режим
