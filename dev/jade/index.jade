@@ -17,20 +17,6 @@ body
 		include _common/_section/_aside-left
 		include _common/_section/_main-container
 	include _common/_section/_footer
-
-	//- include _common/_modules/_dev-panel
-	//- script(src="https://yastatic.net/share2/share.js")
 	script(src="js/main.js")
-	script.
-		var elem = document.querySelector('.settings__form');
-		console.log(elem);
-		elem.addEventListener('submit', function(e){
-			var data = new FormData(document.forms.setting);
-			e.preventDefault();
-			var xhr = new XMLHttpRequest();
-			xhr.open("POST", "backend/download.php");
-			//xhr.onreadystatechange = function() {
-			xhr.send(data);
-		});
 
 

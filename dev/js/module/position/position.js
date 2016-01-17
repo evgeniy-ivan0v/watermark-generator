@@ -25,7 +25,6 @@ var position = (function() {
 		$('.coords__arrow').on('mousedown', _spinnerPush);
 		$('.coords__arrow').on('mouseup', _spinnerStop);
 		common.inputs.on('keyup', _writePos);
-		//$('.button__submit').on('click', getVars);
 	};
 
 	//Переключаем режим
@@ -151,21 +150,31 @@ var position = (function() {
 
 	var _spinnerStop = function() {
 		clearInterval(intervalID);
-	}
-
+	};
+	
 	//Собираем данные для сабмита
 	var getVars = function(event) {
-		event.preventDefault();
-		data = {
-			'mode': opt.mode,
-			'xPos': common.xInput.val(),
-			'yPos': common.yInput.val()
-		};
-		// console.log(data);
+		if(mode === "single"){
+			data = {
+				'mode': opt.mode,
+				'xPos': common.xInput.val(),
+				'yPos': common.yInput.val()
+			};
+		} else if (mode === 'tile') {
+			data = {
+				'mode': opt.mode,
+				'xPos': common.posTile().x,
+				'yPos': common.posTile().y,
+				'marginX': common.xInput.val(),
+				'marginY': common.yInput.val(),
+			};
+		}
+		return data
 	};
 	
 	return {
-		init: init
+		init: init,
+		getData: getVars
 	}
 
 })();

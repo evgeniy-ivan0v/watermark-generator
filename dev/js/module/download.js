@@ -1,17 +1,26 @@
 var $ = require('jquery');
 var upload = require('./upload.js');
+var opacity = require('./opacity.js')
+var position = require('./position/position.js')
 
 var download = (function() {
 	function getData () {
-		var fd = new FormData();
-		fd.append('main', upload.getData().main);
-		fd.append('watermark', upload.getData().wt);
-		fd.append('mode', "single");
-		fd.append('posX', 5);
-		fd.append('posY', 30);
-		fd.append('marginX', 100);
-		fd.append('marginY', 500);
-		fd.append('opasity', .75);
+		var obj = {
+			'mainImg': upload.getData().main,
+			'wtImg': upload.getData().wt,
+			'mode': position.getData().mode,
+			'posX': position.getData().xPos,
+			'posY': position.getData().yPos,
+			'marginX': position.getData().marginX,
+			'marginY': position.getData().marginY,
+			'opacity': opacity.getData().opacity
+		},
+			fd = new FormData();
+
+		for(var prop in obj) {
+			fd.append(prop, obj[prop]);
+		};
+
 		return fd;
 	};
 	var init = function() {

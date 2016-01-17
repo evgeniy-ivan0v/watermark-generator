@@ -88,7 +88,7 @@ gulp.task('jade', function () {
 });
 
 //запуск сервера
-gulp.task('server',['php'], function () {
+gulp.task('server', function () {
   browserSync({
     port: 9000,
     server: {
