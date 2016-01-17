@@ -11,7 +11,7 @@ var download = (function() {
 		fd.append('posY', 30);
 		fd.append('marginX', 100);
 		fd.append('marginY', 500);
-		fd.append('opasity', .75);
+		fd.append('opacity', .75);
 		return fd;
 	};
 	var init = function() {
