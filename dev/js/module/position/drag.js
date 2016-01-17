@@ -20,10 +20,9 @@ var drag = (function() {
 	};
 	var tile = function() {
 		var wrapper = $('.marks-tile__wrapper');
-			
 		wrapper.draggable({
 			cursor: 'pointer',
-			containment: dragArea() 
+			containment: dragArea()
 		});
 	};
 

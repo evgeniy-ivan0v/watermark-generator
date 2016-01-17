@@ -26,6 +26,10 @@ var uploadModule = (function () {
                 width: 0,
                 height: 0
             }
+        },
+        files = {
+            main: '',
+            wt: ''
         }
 
 
@@ -129,12 +133,19 @@ var uploadModule = (function () {
             imageClass = this.dataset.image,
             fileStatus = _checkFile(file);
         if (fileStatus) {
+            if(imageClass === 'generator__main-image' ){
+                files.main = file;
+            } else if (imageClass === 'generator__watermark-image'){
+                files.wt = file;
+            }
             addImage(file, imageClass);
             _placeholder(this, file.name); 
         }; 
     };
 /*----------------------- плейсхолдер ------------------------------*/
-
+    function getData () {
+        return files;
+    }
  	function _placeholder(input, text) {
         if(input && text && text != ''){
             $(input).closest('.upload__label')
@@ -156,7 +167,8 @@ var uploadModule = (function () {
  	};	
 
   return {
-    init: init
+    init: init,
+    getData: getData
   };
 })();
 
