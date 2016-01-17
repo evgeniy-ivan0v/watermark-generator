@@ -2,28 +2,10 @@ var $ = require('jquery');
 var upload = require('./upload.js');
 
 var download = (function() {
-
-	var testData = {
-
-		upload: {
-			image: File,
-			watermark: File
-		},
-		
-		position: {
-			mode: 'single',
-			posX: 50,
-			posY: 30,
-			marginX: 10,
-			marginY: 20
-		},
-		
-		opacity: .75
-	};
 	function getData () {
 		var fd = new FormData();
-		fd.append('mainImg', upload.getData().main);
-		fd.append('wtImg', upload.getData().wt);
+		fd.append('main', upload.getData().main);
+		fd.append('watermark', upload.getData().wt);
 		fd.append('mode', "single");
 		fd.append('posX', 5);
 		fd.append('posY', 30);
