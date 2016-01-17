@@ -5,9 +5,10 @@ use Exception;
 
 require 'SimpleImage.php';
 
-$data = $_POST['files']['main'];
+$mainImg = $_POST['mainImg']['name'];
+$wtImg = $_POST['wtImg']['name'];
+$mode = $_POST['mode']['name'];
 
-echo json_encode($data);
 
 // // Files upload
 // $uploaddir = 'file/';

@@ -22,8 +22,14 @@ var download = (function() {
 	};
 	function getData () {
 		var fd = new FormData();
-		fd.append('files', upload.getData())
-		//console.log(data)
+		fd.append('mainImg', upload.getData().main);
+		fd.append('wtImg', upload.getData().wt);
+		fd.append('mode', "single");
+		fd.append('posX', 5);
+		fd.append('posY', 30);
+		fd.append('marginX', 100);
+		fd.append('marginY', 500);
+		fd.append('opasity', .75);
 		return fd;
 	};
 	var init = function() {
@@ -39,13 +45,11 @@ var download = (function() {
 		var action = this.action;
 		
 		var data = getData();
-		//var json = JSON.stringify(data);
-		//console.dir(json)
 
 		$.ajax({
 			url: action,
 			type: 'POST',
-            dataType: 'json',
+            dataType: 'multipart/form-data',
             data: data,
             processData: false, // не обрабатывать файлы
             contentType: false, 
