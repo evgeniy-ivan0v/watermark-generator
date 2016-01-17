@@ -1,3 +1,4 @@
-.button-holder
-	button(type="submit" class="buttons button__reset")= local.rus.reset
-	button(type="submit" class="buttons button__submit")= local.rus.download
+.button-holder.disabled
+	button(type="submit" class="buttons button__reset" disabled data-localize="reset")= local.rus.reset
+	button(type="submit" class="buttons button__submit" disabled data-localize="download")= local.rus.download
+

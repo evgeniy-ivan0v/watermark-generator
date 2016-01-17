@@ -7,7 +7,8 @@ var drag = require('./drag.js');
 
 var position = (function() {
 	var mode = opt.mode,
-		switchItem = $('.switch__item');
+		switchItem = $('.switch__item'),
+		intervalId;
 
 	//Инициализируем модуль: устанавливаем прослушку событий и 
 	//ставим вотермарк в дефолтные настройки	
@@ -21,9 +22,10 @@ var position = (function() {
 		switchItem.on('click', _switchMode);
 		$('.position__item').on('click', _blockMove);
 		$('.coords__arrow').on('click', _spinner);
+		$('.coords__arrow').on('mousedown', _spinnerPush);
+		$('.coords__arrow').on('mouseup', _spinnerStop);
 		common.inputs.on('keyup', _writePos);
-		$('.button__reset').on('click', setDefault.resetPos);
-		$('.button__submit').on('click', getVars);
+		//$('.button__submit').on('click', getVars);
 	};
 
 	//Переключаем режим
@@ -34,11 +36,9 @@ var position = (function() {
 		item.addClass('active');
 		if (item.hasClass('single')) {
 			common.posBlock.removeClass('tile').addClass('single');
-			common.classBox(opt.defPos);
 			mode = 'single';
 			opt.mode = mode;
 			tile.remove();
-			common.changeIn();
 			drag.single();
 		} else if (item.hasClass('tile')) {
 			var defMx = common.cnd(opt.marginX, opt.minY, common.setbr().y),
@@ -50,6 +50,7 @@ var position = (function() {
 			tile.remove();
 			tile.tiling(defMx, defMy);
 			drag.tile();
+
 		}
 	};
 
@@ -59,7 +60,7 @@ var position = (function() {
 					
 		if (mode === 'single') {
 			common.move(common.grid(choosenPos).xPos, common.grid(choosenPos).yPos);
-			common.classBox(choosenPos);			
+			common.classBox(choosenPos);
 		}
 		
 	};
@@ -91,9 +92,11 @@ var position = (function() {
 			if (elem.is('#x-pos')) {
 				newMx = common.cnd((parseInt(elem.val())), opt.minY, ymax);
 				tile.changeMargin(newMx, currentMy);
+				drag.tile();
 			} else if (elem.is('#y-pos')) {
 				newMy = common.cnd((parseInt(elem.val())), opt.minX, xmax);
 				tile.changeMargin(currentMx, newMy);
+				drag.tile();
 			}
 		} else {
 			console.log('Вы ввели не цифру');
@@ -129,12 +132,26 @@ var position = (function() {
 			if (input.is('#x-pos')) {
 				newMx = common.cnd((currentMx + delta), opt.minY, ymax);
 				tile.changeMargin(newMx, currentMy);
+				drag.tile();
 			} else if (input.is('#y-pos')) {
 				newMy = common.cnd((currentMy + delta), opt.minX, xmax);
 				tile.changeMargin(currentMx, newMy);
+				drag.tile();
 			}
 		}
 	};
+
+	var _spinnerPush = function() {
+		var that = this;
+		intervalID = setInterval(function() {
+			_spinner.call(that);
+		}, 200);
+					
+	};
+
+	var _spinnerStop = function() {
+		clearInterval(intervalID);
+	}
 
 	//Собираем данные для сабмита
 	var getVars = function(event) {
@@ -144,7 +161,7 @@ var position = (function() {
 			'xPos': common.xInput.val(),
 			'yPos': common.yInput.val()
 		};
-		console.log(data);
+		// console.log(data);
 	};
 	
 	return {

@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
   browserSync = require('browser-sync'),
-  php = require('gulp-connect-php'),
- 	plugin = require('gulp-load-plugins')();
+  plugin = require('gulp-load-plugins')();
+
   
 
 
@@ -51,7 +51,8 @@ var paths = {
     destination: 'dist/js/'
   },
   php: {
-    location: './dist/backend/**/*.php'
+    location: './dev/backend/download.php',
+    destination: './dist/backend/**/*.php'
   },
   images: {
     location: 'dev/images/**/*',
@@ -86,26 +87,6 @@ gulp.task('jade', function () {
   .pipe(gulp.dest(paths.jade.destination))
 });
 
-//слежка за файлами и перезагрузка сервера
-gulp.task('watch', function () {
-  gulp.watch(paths.jade.location, ['jade']);
-  gulp.watch(paths.scss.location, ['compass']);
-  gulp.watch(paths.js.locationDev, ['js']);
-  gulp.watch([
-    paths.html.location,
-    paths.css.location,
-    paths.js.location,
-    paths.php.location
-  ]).on('change', browserSync.reload);
-});
-
-gulp.task('php', function() {
-    php.server({ 
-      base: '/dist',
-      keepalive: true
-    });
-});
-
 //запуск сервера
 gulp.task('server',['php'], function () {
   browserSync({
@@ -114,6 +95,20 @@ gulp.task('server',['php'], function () {
       baseDir: paths.browserSync.baseDir
     }
   });
+  /*gulp.watch(paths.html.location).on('change', browserSync.reload);
+  gulp.watch(paths.css.location).on('change', browserSync.reload);
+  gulp.watch(paths.js.location).on('change', browserSync.reload);*/
+  gulp.watch("dist/*.html").on('change', browserSync.reload);
+  gulp.watch("dist/js/**/*.js").on('change', browserSync.reload);
+  gulp.watch("dist/css/**/*.css").on('change', browserSync.reload);
+});
+
+//слежка за файлами и перезагрузка сервера
+gulp.task('watch', function () {
+  gulp.watch(paths.scss.location, ['compass']);
+  gulp.watch(paths.jade.location, ['jade']);
+  gulp.watch(paths.js.locationDev, ['js']);
+  gulp.watch(paths.php.location, ['extrasphp']);
 });
 
 //компиляция scss
@@ -162,7 +157,7 @@ gulp.task('clean', function() {
 });
 
 //сборка dist
-gulp.task('dist', ['compass','extras','extrasphp','fonts','images','jade','js']);
+gulp.task('dist', ['compass','extras','fonts','images','jade','js', 'extrasphp']);
 
 gulp.task('build', ['clean'], function () {
   gulp.start('dist');

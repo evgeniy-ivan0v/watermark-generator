@@ -19,6 +19,9 @@
 	&:hover{
 		background-color: darken(#c1cfd9, 5%);
 	}
+	&:disabled:hover {
+		background-color: #c1cfd9;	
+	}
 }
 
 .button__submit{
@@ -26,5 +29,8 @@
 	background-color: #f97e76;
 	&:hover{
 		background-color: darken(#f97e76, 5%);
+	}
+	&:disabled:hover {
+		background-color: #f97e76;
 	}
 }

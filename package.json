@@ -15,6 +15,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-rimraf": "^0.2.0",
     "jquery": "^2.2.0",
+    "jquery-localize": "^0.1.0",
     "jquery-ui": "^1.10.5"
   }
 }
