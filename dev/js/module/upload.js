@@ -1,4 +1,5 @@
 var $ = require('jquery');
+
 var setError = require('./setError.js');
 var setSizeHolder = require('./setSizeHolder.js');
 var enableModule = require('./enableModule.js');
@@ -11,7 +12,7 @@ var uploadModule = (function () {
                 size: "Файл превышает допустимый размер",
                 type: "Не допустимый тип файла"
             },
-            validType: ['image/png', 'image/jpeg'],
+            validType: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
             maxSize: 2e+6
         },
         imgSize = {
@@ -31,14 +32,18 @@ var uploadModule = (function () {
 
 	var init = function () {
     	_setUpListener();
+        _placeholder(); 
   	};
 
-    function _setUpListener() {
-        _placeholder();    
+
+/*------------------- прослушка событий ---------------------*/
+
+    function _setUpListener() {   
         $('.upload__file-upload').on('change', _fileUpload);
     };
 
     function _checkFile (file) {
+        if(!file){ return; }
         var validType = option.validType
             maxSize = option.maxSize,
             fileType = file.type,
@@ -118,69 +123,37 @@ var uploadModule = (function () {
         });
     };
   
+/*----------------- загрузка и отображение изображений -----------------------------*/
     function _fileUpload() {
-    	var file = this.files[0],
+        var file = this.files[0],
             imageClass = this.dataset.image,
             fileStatus = _checkFile(file);
         if (fileStatus) {
-            //img = createImage(file, imageClass);
             addImage(file, imageClass);
-        };
-
-    	// img.file = file;
-    	// reader.readAsDataURL(file);
-    	// reader.onload = function(e) {
-    	// 	img.src = e.target.result;
-    	// };
-    	// $(img).appendTo('.generator__canvas').addClass('generator__main-image');
-    	// fileNameField.text(img.file.name);
-  
+            _placeholder(this, file.name); 
+        }; 
     };
+/*----------------------- плейсхолдер ------------------------------*/
 
- 	function _placeholder() {
- 		
+ 	function _placeholder(input, text) {
+        if(input && text && text != ''){
+            $(input).closest('.upload__label')
+                .find('.upload__input-text')
+                .text(text);
+        }
  		var input = $(document).find('.upload__fake-input');
-
- 			input.each(function() {
- 				var 
- 					placeholder = $(this).data('placeholder'),
- 					textField = $(this).find('.upload__input-text');
-
- 				textField.text(placeholder);
- 			});
- 	};
-
- 	// function _resetUploading() {
- 	// 	$(document).find('input[file=file]').disable();
- 	// 	_placeholder();
-
- 	// }
-
- 	function _showFileName(name) {
-
- 		
-
-	 	var $this = $(this),
-	 		lbl = $this.closest('label'),
-	 		fileName = lbl.find('.upload__input-text');
-	
-
-
-		lbl
-			.closest('form')
-			.find('input:disabled')
-			.attr('disabled', false);
-
-		lbl
-			.closest('form')
-			.find('.disabled')
-			.removeClass('disabled');
-
-		$(fileName).text(name);
-
-	};
-
-	
+		input.each(function() {
+			var 
+				placeholder = $(this).data('placeholder'),
+				textField = $(this).find('.upload__input-text');
+            // if(text && text != ''){
+            //     textField.text(text);
+            // };
+			if (textField.text() == '') {
+				textField.text(placeholder);
+			};
+		});
+ 	};	
 
   return {
     init: init

@@ -1,15 +1,18 @@
 .upload
-	label.upload__label.upload__label_suorce-img
-		h3.upload__title(data-localize="originalimage")= local.rus.default_img
-		div(class="upload__fake-input upload__fake-input_img" data-placeholder="Image.jpg")
+	label.upload__label.upload__label_main-img
+		h3(data-localize="originalimage").upload__title.settings__row-title= local.rus.default_img
+		div(class="upload__fake-input upload__fake-input-wrapper_img" data-placeholder="#{local.rus.img_placeholder}")
 			.upload__input-text
 			.upload__btn
+		//- input(class="upload__file-upload" type="file" data-img-class="generator__main-image") 
 		input(class="upload__file-upload" data-image="generator__main-image" type="file") 
 
 
 	label.upload__label.upload__label_watermark.disabled
-		h3.upload__title(data-localize="watermark")= local.rus.watermark
-		div(class="upload__fake-input upload__fake-input_watermark" data-placeholder="Image.png")
+		h3(data-localize="watermark").upload__title.settings__row-title= local.rus.watermark
+		div(class="upload__fake-input upload__fake-input-wrapper_watermark" data-placeholder="#{local.rus.img_placeholder}")
 			.upload__input-text
 			.upload__btn
+		//- input(class="upload__file-upload upload__file-upload_watermark" type="file" data-img-class="generator__watermark-image" )
 		input(class="upload__file-upload" data-image="generator__watermark-image" type="file" disabled)
+
