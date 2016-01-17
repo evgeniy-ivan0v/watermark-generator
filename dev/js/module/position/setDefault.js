@@ -18,9 +18,10 @@ var setDefault = (function() {
 			//добавляем класс режима, 
 			//добавляем активный класс нужному квадрату сетки
 			common.posBlock.addClass(opt.defMode);
+			tile.remove();
+			resetPos();
 			common.changeIn();
 			common.classBox(opt.defPos);
-
 			drag.single();
 
 			//Записываем текущие координаты вотермарка
