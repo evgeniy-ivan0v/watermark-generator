@@ -3,7 +3,8 @@ var $ = require('jquery');
 var widgets = (function () {
 
     function _setUpListener() {
-		var vk = document.getElementById('vk'),
+		var like = document.getElementById('like'),
+			vk = document.getElementById('vk'),
 			tw = document.getElementById('twitter'),
 			fb = document.getElementById('facebook'),
 
@@ -51,6 +52,11 @@ var widgets = (function () {
 				window.open(url,'','toolbar=0,status=0,width=626,height=436');
 			}
 		};
+
+		like.removeAttribute('target');
+		like.addEventListener('click', function(e){
+			e.preventDefault();
+		});
 
 		vk.addEventListener('click', function(){
 			Share.vkontakte('URL','Генератор водяных знаков','IMG_PATH','Самое лучшее описание, которое вообще можно придумать');
