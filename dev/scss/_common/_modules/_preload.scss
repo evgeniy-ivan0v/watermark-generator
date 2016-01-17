@@ -1,8 +1,16 @@
-.preloader{
-	@include block-square (210px);
-	@include absolute-center();
+.preloader {
+	position: fixed;
+	background-color: rgba(255,255,255,0.4);
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
 	display: none;
 	z-index: 30;
+}
+.preloader-holder{
+	@include block-square (210px);
+	@include absolute-center();
 }
 @mixin animation ($value...) {
 	animation: $value;

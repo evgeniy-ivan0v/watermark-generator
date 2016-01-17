@@ -35,7 +35,7 @@
 }
 .generator__image-holder {
 	@include absolute-center;
-	max-height: 100%;
+	overflow: hidden;
 }
 .generator__main-image{
 	max-height: 100%;
@@ -48,6 +48,13 @@
 	z-index: 10;
 	max-height: 100%;
 	max-width: 100%;
-	cursor: pointer;
+	display: inline-block;
+	vertical-align: bottom;
+}
+.marks-tile__wrapper {
+	position: absolute;
+	overflow: hidden;
+	top: 0;
+	left: 0;
 }
 

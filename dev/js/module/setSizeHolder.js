@@ -1,23 +1,16 @@
 var $ = require('jquery');
 
-var setSizeHolder = function () {
+var setSizeHolder = function (img) {
 	var $elem = $('.generator__image-holder'),
-		$img = $elem.find('.generator__main-image'),
-		$holder = $('.generator__canvas');
+		$img = $(img);
 
 	setSize("auto","auto");
-
-	$holder.addClass('generator__canvas_preload');
-	$img.on('load', function () {
-		setSize($img.outerWidth(), $img.outerHeight())
-		$holder.removeClass('generator__canvas_preload');
-	});
+	setSize($img.outerWidth(), $img.outerHeight());
 
 	function setSize (elemWidth, elemHeight) {
 		$elem.height(elemHeight);
 		$elem.width(elemWidth);
-	};
-	
+	};	
 };
 
 module.exports = setSizeHolder;

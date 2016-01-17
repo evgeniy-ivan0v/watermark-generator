@@ -2,4 +2,4 @@ ul.socials
 	- var socials = {'like': "#", 'facebook':"http://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=TITLE&p%5Bsummary%5D=DESC&p%5Burl%5D=URL&p%5Bimages%5D%5B0%5D=IMG_PATH", 'twitter':"https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Ffiddle.jshell.net%2F_display%2F&text=TITLE&url=URL", 'vk':"http://vk.com/share.php?url=URL&title=TITLE&description=DESC&image=IMG_PATH&noparse=true"}
 	each prop,key in socials
 		li(class="socials__item socials__item-#{key}")
-			a(class="socials__link socials__link-#{key}" id="#{key}" href="#{prop}" target="_blank")
+			a(class="socials__link socials__link-#{key}" id="#{key}" href="#{prop}")
