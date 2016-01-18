@@ -8,6 +8,7 @@ var lang = (function() {
 		setUpListeners();
 	};
 
+
 	var setUpListeners = function() {
 		$('#ru').on('click', function(event) {
 			event.preventDefault();
