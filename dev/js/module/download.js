@@ -29,7 +29,6 @@ var download = (function() {
 
 	var setUpListeners = function() {
 		$('.settings__form').on("submit", sendData);
-		//$('#download-link').on('click')
 	};
 
 	var sendData = function(e) {
@@ -44,9 +43,13 @@ var download = (function() {
             dataType: 'multipart/form-data',
             data: data,
             processData: false, // не обрабатывать файлы
-            contentType: false, 
+            contentType: false,
+            beforeSend: function () {
+            	$('.preloader').fadeIn();
+            }, 
             complete: function() {
 	        	window.location = '../backend/headers.php';
+	        	$('.preloader').fadeOut();
 	        }
 		});
 
