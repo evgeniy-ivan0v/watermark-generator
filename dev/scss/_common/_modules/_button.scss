@@ -1,4 +1,5 @@
 .button-holder {
+	padding-top: rem(35);
 	padding-bottom: rem(22);
 }
 
@@ -11,20 +12,29 @@
 	font-size: rem(18);
 	width: 99px;
 	overflow: hidden;
+	@include border-radius(3px);
 }
 
 .button__reset{
 	float: left;
-	background-color: #c1cfd9;	
+	background-color: #c1cfd9;
+	margin-left: 10px;	
 	&:hover{
 		background-color: darken(#c1cfd9, 5%);
+	}
+	&:disabled:hover {
+		background-color: #c1cfd9;	
 	}
 }
 
 .button__submit{
 	float: right;
 	background-color: #f97e76;
+	margin-right: 10px;
 	&:hover{
 		background-color: darken(#f97e76, 5%);
+	}
+	&:disabled:hover {
+		background-color: #f97e76;
 	}
 }

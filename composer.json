@@ -1,0 +1,15 @@
+{
+    "name": "sergiu026/watermark-generator",
+    "authors": [
+        {
+            "name": "Sergiu",
+            "email": "synthezys@gmail.com"
+        }
+    ],
+    "require": {
+    	"sybio/image-workshop": "^2.0"
+    },
+    "config":{
+    	"vendor-dir":"dev/backend/vendor"
+    }
+}

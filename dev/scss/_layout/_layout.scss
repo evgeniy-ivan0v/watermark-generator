@@ -10,7 +10,7 @@ body {
 	// background-size: cover;
 	// background-repeat: no-repeat;
 	background-size: cover;
-	min-width: 1060px;
+	min-width: 1080px;
 }
 ul, menu {
 	list-style: none;
@@ -44,4 +44,17 @@ button{
 
 a{
 	text-decoration: none;
+}
+.error {
+	width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    height: 100px;
+    text-align: center;
+    font-size: 3em;
+    line-height: 100px;
+    overflow: hidden;
 }

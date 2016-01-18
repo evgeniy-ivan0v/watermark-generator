@@ -1,12 +1,12 @@
 - var positions = ['top-left', 'top-center', 'top-right', 'middle-left', 'middle-center', 'middle-right', 'bottom-left', 'bottom-center', 'bottom-right']
 - var coords = ['x', 'y']
-.position
+.position.disabled
 	.position__header-wrapper
-		h3.settings__row-title.position__header= local.rus.position_title 
+		h3.settings__row-title.position__header(data-localize="place")= local.rus.position_title 
 		ul.switch__list
 			li.switch__item.tile
 			li.switch__item.single.active
-	.position-wrapper.unselect
+	.position-wrapper
 		ul.position__list
 			each item in positions
 				li(class="position__item", data-position="#{item}")
