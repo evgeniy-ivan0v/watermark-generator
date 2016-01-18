@@ -1,6 +1,6 @@
 <?php
-// namespace abeautifulsite;
-// use Exception;
+namespace abeautifulsite;
+use Exception;
 
 
 require 'SimpleImage.php';
@@ -74,45 +74,43 @@ if(!in_array($imageFileType, $fileTypes) || !in_array($wtFileType, $fileTypes)) 
     die("Разрешены только изображения форматов JPG, JPEG, PNG & GIF.");
     $uploadOk = 0;
 }
-// if ($uploadOk === 1) {
-// 	move_uploaded_file($_FILES['mainImg']['tmp_name'], $uploadfile);
-// 	move_uploaded_file($_FILES['wtImg']['tmp_name'], $watermarkfile);
-// 	$imageSize = getimagesize($uploadfile);
-// 	$watermarkSize = getimagesize($watermarkfile);
-// 	$imagewidth = $imageSize[0];
-// 	$imageheight = $imageSize[1];
-// 	$wtwidth = $watermarkSize[0];
-// 	$wtheight = $watermarkSize[1];
+if ($uploadOk === 1) {
+	move_uploaded_file($_FILES['mainImg']['tmp_name'], $uploadfile);
+	move_uploaded_file($_FILES['wtImg']['tmp_name'], $watermarkfile);
+	$imageSize = getimagesize($uploadfile);
+	$watermarkSize = getimagesize($watermarkfile);
+	$imagewidth = $imageSize[0];
+	$imageheight = $imageSize[1];
+	$wtwidth = $watermarkSize[0];
+	$wtheight = $watermarkSize[1];
 
-// 	if ($mode == "single") {
-// 		$img = new SimpleImage($uploadfile);
-// 		$img->overlay($watermarkfile, 'top left', $opacity, $originX, $originY);
-// 		$img->save('./file/watermarked.jpg');
-//   	} else if ($mode == "tile") {
-// 		$pozX = $originX;
-// 		$pozY = $originY;
-// 		$marX = $marginX;
-// 		$marY = $marginY;
-// 		$widMain = $imagewidth;
-// 		$heigMain = $imageheight;
-// 		$widWat = $wtwidth;
-// 		$heigWat = $wtheight;
-//   		$img = new SimpleImage($uploadfile);
-//   		$newPozX = $pozX;
-//   		while ($newPozX < $widMain) {
-//   			$newPozY = $pozY;
-//   			// echo $newPozX . " - X <br>";
-//   			while ($newPozY < $heigMain) {
-//   				$img->overlay($watermarkfile, 'top left', $opacity, $newPozX, $newPozY);
-//   				$newPozY += $heigWat + $marY;
-//   				// echo $newPozY . " - Y <br>";
-//   			}
-//   			$newPozX += $widWat + $marX;
-//   		}
-//   		$img->save('./file/watermarked.jpg');
-//   	}
+	if ($mode == "single") {
+		$img = new SimpleImage($uploadfile);
+		$img->overlay($watermarkfile, 'top left', $opacity, $originX, $originY);
+		$img->save('./file/watermarked.jpg');
+  	} else if ($mode == "tile") {
+		$pozX = $originX;
+		$pozY = $originY;
+		$marX = $marginX;
+		$marY = $marginY;
+		$widMain = $imagewidth;
+		$heigMain = $imageheight;
+		$widWat = $wtwidth;
+		$heigWat = $wtheight;
+  		$img = new SimpleImage($uploadfile);
+  		$newPozX = $pozX;
+  		while ($newPozX < $widMain) {
+  			$newPozY = $pozY;
+  			while ($newPozY < $heigMain) {
+  				$img->overlay($watermarkfile, 'top left', $opacity, $newPozX, $newPozY);
+  				$newPozY += $heigWat + $marX;
+  			}
+  			$newPozX += $widWat + $marY;
+  		}
+  		$img->save('./file/watermarked.jpg');
+  	}
 	
-// }
+}
 
 // else { 
 // 	echo "<h3>Ошибка! Не удалось загрузить файл на сервер!</h3>"; 
@@ -122,7 +120,7 @@ if(!in_array($imageFileType, $fileTypes) || !in_array($wtFileType, $fileTypes)) 
 //отдаем файл на скачивание
 $result = './file/watermarked.jpg';
 // include_once 'headers.php';
-echo mime_content_type($result);
+
 
 header("Content-Type: application/json");
 echo json_encode($answer);

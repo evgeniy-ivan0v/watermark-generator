@@ -1,6 +1,6 @@
 <?php 
 
-$result = "./file/watermarked.jpg";
+$result = './file/watermarked.jpg';
 
 if (file_exists($result)) {
 	ob_clean();
