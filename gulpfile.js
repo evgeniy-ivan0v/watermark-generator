@@ -51,7 +51,7 @@ var paths = {
     destination: 'dist/js/'
   },
   php: {
-    location: './dev/backend/download.php',
+    location: './dev/backend/**/*.php',
     destination: './dist/backend/**/*.php'
   },
   images: {
