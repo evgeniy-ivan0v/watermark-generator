@@ -29,7 +29,9 @@ var uploadModule = (function () {
         },
         files = {
             main: '',
-            wt: ''
+            wt: '',
+            cofX: '',
+            cofY: ''
         }
 
 
@@ -87,9 +89,10 @@ var uploadModule = (function () {
             newHeight = imgSize.main.newHeight,
             watWidth = imgSize.water.width,
             watHeight = imgSize.water.height,
-            watNewWidth = watWidth / (natWidth / newWidth),
-            watNewHeight = watHeight / (natHeight / newHeight);
-            //console.log('Натуральная ширика изображения - '+natWidth+'\nНатуральная высота изображения - '+natHeight+'\nНовая ширина изображения - '+newWidth+'\nНовая высота изображения - '+newHeight+'\nОригинальная ширина ватермарка - '+watWidth+'\nОригинальняя высота ватермарка - '+watHeight+'\nНовая ширина ватермарка - '+watNewWidth+'\nНовая высота ватермарка - '+watNewHeight)
+            cofX = files.cofX = (natWidth / newWidth),
+            cofY = files.cofY = (natHeight / newHeight),
+            watNewWidth = watWidth / cofX,
+            watNewHeight = watHeight / cofY;
         if($('img').is('.generator__watermark-image')){
             $('.generator__watermark-image')
                 .width(watNewWidth)
@@ -101,8 +104,9 @@ var uploadModule = (function () {
         var image = createImage(file, className),
             selector = '.' + className,
             oldImg = $imageHolder.find('img').is(selector);
-        
+        $('.preloader').fadeIn();
         $(image).on('load', function () {
+            $('.preloader').fadeOut();
             var self = $(this),
                 src = self.attr('src');
             if(oldImg) {

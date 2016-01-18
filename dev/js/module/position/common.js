@@ -34,7 +34,18 @@ var common = (function() {
 			newY = defineCoords(defineWatermark()).y;
 		xInput.val(newX);
 		yInput.val(newY);
-	}
+	};
+
+	function posTile() {
+		return{
+			x: defineCoords(getTileWrapper()).x,
+			y: defineCoords(getTileWrapper()).y
+		}
+	};
+
+	function getTileWrapper() {
+		return $('.marks-tile__wrapper');
+	};
 
 	//Получение значения, не выходящего за рамки заданного диапазона
 	function condition(current, min, max) {
@@ -151,6 +162,7 @@ var common = (function() {
 		switches: switches,
 		container: container,
 		posItems: posItems,
+		posTile: posTile,
 		curopt: curOptions
 	}
 })();

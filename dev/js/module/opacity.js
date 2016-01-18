@@ -37,10 +37,16 @@ var opacity = (function () {
       $watermark.css('opacity', (option.value));
       $elem.slider(option);
   };
+  var getData = function () {
+      return {
+          opacity : getWatermark().css('opacity')
+      }
+  }
   return {
       init: init,
       enable: enable,
-      setDefault: setDefault
+      setDefault: setDefault,
+      getData: getData
   };
 })();
 

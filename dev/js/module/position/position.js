@@ -8,7 +8,7 @@ var drag = require('./drag.js');
 var position = (function() {
 	var mode = opt.mode,
 		switchItem = $('.switch__item'),
-		intervalId;
+		intervalID;
 
 	//Инициализируем модуль: устанавливаем прослушку событий и 
 	//ставим вотермарк в дефолтные настройки	
@@ -22,10 +22,9 @@ var position = (function() {
 		switchItem.on('click', _switchMode);
 		$('.position__item').on('click', _blockMove);
 		$('.coords__arrow').on('click', _spinner);
-		$('.coords__arrow').on('mousedown', _spinnerPush);
-		$('.coords__arrow').on('mouseup', _spinnerStop);
+		// $('.coords__arrow').on('mousedown', _spinnerPush);
+		// $('.coords__arrow').on('mouseup', _spinnerStop);
 		common.inputs.on('keyup', _writePos);
-		//$('.button__submit').on('click', getVars);
 	};
 
 	//Переключаем режим
@@ -104,7 +103,7 @@ var position = (function() {
 	};
 
 	//Обрабатываем клики на стрелках инпутов
-	var _spinner = function() {
+	var _spinner = function(e) {
 		var arrow = $(this),
 			item = arrow.closest('.coords__item'),
 			input = item.find('.coords__input'),
@@ -151,21 +150,31 @@ var position = (function() {
 
 	var _spinnerStop = function() {
 		clearInterval(intervalID);
-	}
-
+	};
+	
 	//Собираем данные для сабмита
 	var getVars = function(event) {
-		event.preventDefault();
-		data = {
-			'mode': opt.mode,
-			'xPos': common.xInput.val(),
-			'yPos': common.yInput.val()
-		};
-		// console.log(data);
+		if(mode === "single"){
+			data = {
+				'mode': opt.mode,
+				'xPos': common.xInput.val(),
+				'yPos': common.yInput.val()
+			};
+		} else if (mode === 'tile') {
+			data = {
+				'mode': opt.mode,
+				'xPos': common.posTile().x,
+				'yPos': common.posTile().y,
+				'marginX': common.xInput.val(),
+				'marginY': common.yInput.val(),
+			};
+		}
+		return data
 	};
 	
 	return {
-		init: init
+		init: init,
+		getData: getVars
 	}
 
 })();
