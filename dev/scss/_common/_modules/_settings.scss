@@ -35,3 +35,9 @@
 	color: $setting-titles-color;
 	padding-left: rem(17);
 }
+.disabled {
+	opacity: .5;
+	& * {
+		cursor: default !important;
+	}
+}

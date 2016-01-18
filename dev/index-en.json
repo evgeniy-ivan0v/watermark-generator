@@ -1,0 +1,12 @@
+{
+  "sitename":"Watermarks generator",
+  "settings":"Settings",
+  "originalimage": "Original image",
+  "chooseimage": "Choose image",
+  "watermark": "Watermark",
+  "place": "Place",
+  "transparency": "Transparency",
+  "reset": "Reset",
+  "download": "Download",
+  "copyright": "&copy; 2016 This is my website. Don't copy or steal it, please"
+}

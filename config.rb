@@ -5,7 +5,7 @@ require 'compass/import-once/activate'
 http_path = "/"
 css_dir = "dist/css"
 sass_dir = "dev/scss"
-images_dir = "dev/images"
+images_dir = "dist/images"
 javascripts_dir = "dev/js"
 
 
