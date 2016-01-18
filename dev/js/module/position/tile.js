@@ -70,7 +70,6 @@ var tile = (function() {
 
 	//Меняет марджины у вотермарков
 	var changeMargin = function(mx, my) {
-		console.log('ff')
 		common.defmark().css({'margin-right': my, 'margin-bottom': mx});
 		wrapperSize(mx, my);
 		lineWidth(mx, my);
