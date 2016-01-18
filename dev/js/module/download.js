@@ -29,6 +29,7 @@ var download = (function() {
 
 	var setUpListeners = function() {
 		$('.settings__form').on("submit", sendData);
+		//$('#download-link').on('click')
 	};
 
 	var sendData = function(e) {
@@ -36,7 +37,7 @@ var download = (function() {
 		var action = this.action;
 		
 		var data = getData();
-
+		
 		$.ajax({
 			url: action,
 			type: 'POST',
@@ -45,22 +46,20 @@ var download = (function() {
             processData: false, // не обрабатывать файлы
             contentType: false, 
             success: function(data) {
-			   console.dir(data); // apple
+			   console.dir("fdfd"); // apple
 			}
 		})
 
-		// .done (function(answer) {
-		// 	console.log('yupiii');
-		// 	console.log(answer);
-		// })
+		.done (function(answer) {
+			console.log('yupiii');
+			console.log(answer)
+		})
 
+		.fail (function(answer) {
+			console.log('fail');
+		});
 
-
-		// .fail (function(answer) {
-		// 	console.log('fail');
-		// });
-
-	}
+	};
 
 	return {
 		init: init
