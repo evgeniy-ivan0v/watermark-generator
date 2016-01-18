@@ -9,10 +9,10 @@ var download = (function() {
 			'mainImg': upload.getData().main,
 			'wtImg': upload.getData().wt,
 			'mode': position.getData().mode,
-			'posX': position.getData().xPos,
-			'posY': position.getData().yPos,
-			'marginX': position.getData().marginX,
-			'marginY': position.getData().marginY,
+			'posX': position.getData().xPos * upload.getData().cofX,
+			'posY': position.getData().yPos * upload.getData().cofY,
+			'marginX': position.getData().marginX * upload.getData().cofX,
+			'marginY': position.getData().marginY * upload.getData().cofY,
 			'opacity': opacity.getData().opacity
 		},
 			fd = new FormData();
@@ -36,31 +36,24 @@ var download = (function() {
 		var action = this.action;
 		
 		var data = getData();
-
+		
 		$.ajax({
 			url: action,
 			type: 'POST',
             dataType: 'multipart/form-data',
             data: data,
             processData: false, // не обрабатывать файлы
-            contentType: false, 
-            success: function(data) {
-			   console.dir(data); // apple
-			}
-		})
+            contentType: false,
+            beforeSend: function () {
+            	$('.preloader').fadeIn();
+            }, 
+            complete: function() {
+	        	window.location = '../backend/headers.php';
+	        	$('.preloader').fadeOut();
+	        }
+		});
 
-		// .done (function(answer) {
-		// 	console.log('yupiii');
-		// 	console.log(answer);
-		// })
-
-
-
-		// .fail (function(answer) {
-		// 	console.log('fail');
-		// });
-
-	}
+	};
 
 	return {
 		init: init
