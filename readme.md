@@ -1,10 +1,6 @@
 #### **Описание проекта:**
 Сервис для генерации водяных марок. 
 ![GitHub Logo](/images/logo.png)
-
-### **Демонстрация проекта:** 
-[loft.synthez.gq/dz3/](http://loft.synthez.gq/dz3/)
-
 ### **Как установить наш проект ?**
 1. git clone https://github.com/evgeniy-ivan0v/watermark-generator.git
 2. bower i
