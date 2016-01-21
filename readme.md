@@ -1,6 +1,3 @@
-#### **Описание проекта:**
-Сервис для генерации водяных марок. 
-![GitHub Logo](/images/logo.png)
 ### **Как установить наш проект ?**
 1. git clone https://github.com/evgeniy-ivan0v/watermark-generator.git
 2. bower i
